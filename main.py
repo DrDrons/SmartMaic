@@ -12,7 +12,7 @@ from tkinter import messagebox
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
@@ -23,6 +23,20 @@ window = Tk()
 window.title("SmartMaic")
 window.geometry('1000x700')
 tab_control = Notebook(window)
+
+def spravka():
+    f = open('Справка.txt', 'r', encoding="utf-8")
+    rd = f.read()
+    messagebox.showinfo('Справка', "" + str(rd) + "")
+
+menu = Menu(window)
+
+file_item = Menu(menu)
+file_item.add_command(label='Справка', command=spravka)
+
+menu.add_cascade(label='Файл', menu=file_item)
+
+window.config(menu=menu)
 
 day_info_tab = ttk.Frame(tab_control)
 tab_control.add(day_info_tab, text="Информация")
@@ -37,7 +51,7 @@ laibal_day.grid(column=0, row=0)
 laibal_night = Frame(day_info_tab)
 laibal_night.grid(column=0, row=1)
 
-rows_device = ('info_smartmaic', 'ip_smartmaic', 'id_smartmaic')
+rows_device = ('info_smartmaic', 'ip_smartmaic', 'id_smartmaic', 'one_pulse_first_entrance', 'ed_izm_one', 'one_pulse_second_entranse', 'ed_izm_two')
 device_table = Treeview(device_tab, show="headings")
 device_table.grid(column=0, row=0, columnspan=3, padx=20)
 device_table["columns"] = rows_device
@@ -48,6 +62,10 @@ for head in rows_device:
 device_table.heading(rows_device[0], text="Название")
 device_table.heading(rows_device[1], text="IP-Устройства")
 device_table.heading(rows_device[2], text="ID-Устройства")
+device_table.heading(rows_device[3], text="Значение импульса(Вход 1)")
+device_table.heading(rows_device[4], text="Единица измерения")
+device_table.heading(rows_device[5], text="Значение импульса(Вход 1)")
+device_table.heading(rows_device[6], text="Единица измерения")
 
 
 rows_day_info = ('name', 'ch1', 'tch1', 'ch2', 'tch2', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
@@ -139,22 +157,45 @@ entr_ip_sm.grid(column=0, row=3)
 entr_id_sm = Entry(lbf_registraciya, width=30)
 entr_id_sm.grid(column=0, row=5)
 
+entr_one_pulse_first1 = Entry(lbf_registraciya, width=30)
+entr_one_pulse_first1.grid(column=0, row=7)
+
+entr_ed_izm1 = Entry(lbf_registraciya, width=30)
+entr_ed_izm1.grid(column=0, row=9)
+
+entr_one_pulse_first2 = Entry(lbf_registraciya, width=30)
+entr_one_pulse_first2.grid(column=0, row=11)
+
+entr_ed_izm2 = Entry(lbf_registraciya, width=30)
+entr_ed_izm2.grid(column=0, row=13)
 
 lb_name_sm = Label(lbf_registraciya, text='Название устройства')
 lb_name_sm.grid(column=0, row=0, pady=10)
 
-lb_name_sm = Label(lbf_registraciya, text='IP-Адрес')
-lb_name_sm.grid(column=0, row=2, pady=10)
+lb_ip = Label(lbf_registraciya, text='IP-Адрес')
+lb_ip.grid(column=0, row=2, pady=10)
 
-lb_name_sm = Label(lbf_registraciya, text='ID устройства')
-lb_name_sm.grid(column=0, row=4, pady=10)
+lb_id = Label(lbf_registraciya, text='ID устройства')
+lb_id.grid(column=0, row=4, pady=10)
+
+lb_one_pulse1 = Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1.grid(column=0, row=6, pady=10)
+
+lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1.grid(column=0, row=8, pady=10)
+
+lb_one_pulse1 = Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1.grid(column=0, row=10, pady=10)
+
+lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1.grid(column=0, row=12, pady=10)
 
 
 btn_add_sm = Button(lbf_registraciya, text='Добавить', width=10, command=add_smartmaic)
-btn_add_sm.grid(column=0, row=8, padx=40, pady=(20, 20), sticky=tk.W)
+btn_add_sm.grid(column=0, row=20, padx=40, pady=(20, 20), sticky=tk.W)
 
 btn_del_sm = Button(lbf_registraciya, text='Удалить', width=10, command=del_smartmaic)
-btn_del_sm.grid(column=0, row=8, padx=40, sticky=tk.E)
+btn_del_sm.grid(column=0, row=20, padx=40, sticky=tk.E)
 
 
 def update_table_sm():
