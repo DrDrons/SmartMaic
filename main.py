@@ -1,4 +1,4 @@
-
+from idlelib.tooltip import Hovertip
 import requests
 import datetime
 import pypyodbc
@@ -34,7 +34,7 @@ menu = Menu(window)
 file_item = Menu(menu)
 file_item.add_command(label='Справка', command=spravka)
 
-menu.add_cascade(label='Файл', menu=file_item)
+menu.add_cascade(label='Меню', menu=file_item)
 
 window.config(menu=menu)
 
@@ -57,18 +57,18 @@ device_table.grid(column=0, row=0, columnspan=3, padx=20)
 device_table["columns"] = rows_device
 device_table["displaycolumns"] = rows_device
 for head in rows_device:
-    device_table.column(head, anchor=CENTER)
+    device_table.column(head, anchor=CENTER, width=150)
 
 device_table.heading(rows_device[0], text="Название")
 device_table.heading(rows_device[1], text="IP-Устройства")
 device_table.heading(rows_device[2], text="ID-Устройства")
-device_table.heading(rows_device[3], text="Значение импульса(Вход 1)")
+device_table.heading(rows_device[3], text="Значение импульса(Ch1)")
 device_table.heading(rows_device[4], text="Единица измерения")
-device_table.heading(rows_device[5], text="Значение импульса(Вход 1)")
+device_table.heading(rows_device[5], text="Значение импульса(Ch2)")
 device_table.heading(rows_device[6], text="Единица измерения")
 
 
-rows_day_info = ('name', 'ch1', 'tch1', 'ch2', 'tch2', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
+rows_day_info = ('name', 'ch1', 'tch1', 'ed_izm_one', 'ch2', 'tch2', 'ed_izm_two', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
 day_info_table = Treeview(laibal_day, show="headings")
 day_info_table.pack(side=BOTTOM, padx=20, pady=(10, 10))
 day_info_table["columns"] = rows_day_info
@@ -79,17 +79,19 @@ for head in rows_day_info:
 day_info_table.heading(rows_day_info[0], text="Название")
 day_info_table.heading(rows_day_info[1], text="Импульсный вход 1")
 day_info_table.heading(rows_day_info[2], text="За всё время(TCh1)")
-day_info_table.heading(rows_day_info[3], text="Импульсный вход 2")
-day_info_table.heading(rows_day_info[4], text="За всё время(TCh2)")
-day_info_table.heading(rows_day_info[5], text="Дата")
-day_info_table.heading(rows_day_info[6], text="Время")
-day_info_table.heading(rows_day_info[7], text="IP-Устройства")
-day_info_table.heading(rows_day_info[8], text="ID-Устройства")
+day_info_table.heading(rows_day_info[3], text="Еденица измерения")
+day_info_table.heading(rows_day_info[4], text="Импульсный вход 2")
+day_info_table.heading(rows_day_info[5], text="За всё время(TCh2)")
+day_info_table.heading(rows_day_info[6], text="Еденица измерения")
+day_info_table.heading(rows_day_info[7], text="Дата")
+day_info_table.heading(rows_day_info[8], text="Время")
+day_info_table.heading(rows_day_info[9], text="IP-Устройства")
+day_info_table.heading(rows_day_info[10], text="ID-Устройства")
 
 laibol_neigth = Label(laibal_day, text='День')
 laibol_neigth.pack(side=TOP, pady=10)
 
-rows_night_info = ('name', 'ch1', 'tch1', 'ch2', 'tch2', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
+rows_night_info = ('name', 'ch1', 'tch1', 'ed_izm_one', 'ch2', 'tch2', 'ed_izm_two', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
 night_info_table = Treeview(laibal_night, show="headings")
 night_info_table.pack(side=BOTTOM, pady=(10, 10))
 night_info_table["columns"] = rows_night_info
@@ -100,12 +102,14 @@ for head in rows_night_info:
 night_info_table.heading(rows_night_info[0], text="Название")
 night_info_table.heading(rows_night_info[1], text="Импульсный вход 1")
 night_info_table.heading(rows_night_info[2], text="За всё время(TCh1)")
-night_info_table.heading(rows_night_info[3], text="Импульсный вход 2")
-night_info_table.heading(rows_night_info[4], text="За всё время(TCh2)")
-night_info_table.heading(rows_night_info[5], text="Дата")
-night_info_table.heading(rows_night_info[6], text="Время")
-night_info_table.heading(rows_night_info[7], text="IP-Устройства")
-night_info_table.heading(rows_night_info[8], text="ID-Устройства")
+night_info_table.heading(rows_night_info[3], text="Еденица измерения")
+night_info_table.heading(rows_night_info[4], text="Импульсный вход 2")
+night_info_table.heading(rows_night_info[5], text="За всё время(TCh2)")
+night_info_table.heading(rows_night_info[6], text="Еденица измерения")
+night_info_table.heading(rows_night_info[7], text="Дата")
+night_info_table.heading(rows_night_info[8], text="Время")
+night_info_table.heading(rows_night_info[9], text="IP-Устройства")
+night_info_table.heading(rows_night_info[10], text="ID-Устройства")
 
 laibol_daay = Label(laibal_night, text='Ночь')
 laibol_daay.pack(side=TOP)
@@ -115,16 +119,20 @@ p = '/?page=getdata&devid='
 Pass = '&devpass=12345'
 
 def add_smartmaic():
-    if entr_name_sm.get() == '' or entr_ip_sm.get() == '' or entr_id_sm.get() == '':
+    if entr_name_sm.get() == '' or entr_ip_sm.get() == '' or entr_id_sm.get() == '' or entr_one_pulse_first1.get() == '' or entr_ed_izm1.get() == '' or entr_one_pulse_first2.get() == '' or entr_ed_izm2.get() == '':
         messagebox.showwarning('Ошибка!', 'Введите все данные!')
     else:
-        mySQLQuery1 = f"insert into dbo.device(info_smartmaic,ip_smartmaic,id_smartmaic) values (N'" + entr_name_sm.get() + "',N'" + entr_ip_sm.get() + "',N'" + entr_id_sm.get() + "')"
+        mySQLQuery1 = f"insert into dbo.device(info_smartmaic, ip_smartmaic, id_smartmaic, one_pulse_first_entrance, ed_izm_one, one_pulse_second_entranse, ed_izm_two) values (N'" + entr_name_sm.get() + "',N'" + entr_ip_sm.get() + "',N'" + entr_id_sm.get() + "',N'" + entr_one_pulse_first1.get() + "',N'" + entr_ed_izm1.get() + "',N'" + entr_one_pulse_first2.get() + "',N'" + entr_ed_izm2.get() + "')"
         cursor.execute(mySQLQuery1)
         connection.commit()
         update_table_sm()
         entr_name_sm.delete(0, 'end')
         entr_ip_sm.delete(0, 'end')
         entr_id_sm.delete(0, 'end')
+        entr_one_pulse_first1.delete(0, 'end')
+        entr_ed_izm1.delete(0, 'end')
+        entr_one_pulse_first2.delete(0, 'end')
+        entr_ed_izm2.delete(0, 'end')
 
 
 def del_smartmaic():
@@ -159,12 +167,14 @@ entr_id_sm.grid(column=0, row=5)
 
 entr_one_pulse_first1 = Entry(lbf_registraciya, width=30)
 entr_one_pulse_first1.grid(column=0, row=7)
+Hovertip(entr_one_pulse_first1, "Для первого импульсного входа", hover_delay=100)
 
 entr_ed_izm1 = Entry(lbf_registraciya, width=30)
 entr_ed_izm1.grid(column=0, row=9)
 
 entr_one_pulse_first2 = Entry(lbf_registraciya, width=30)
 entr_one_pulse_first2.grid(column=0, row=11)
+Hovertip(entr_one_pulse_first2, "Для второго импульсного входа", hover_delay=100)
 
 entr_ed_izm2 = Entry(lbf_registraciya, width=30)
 entr_ed_izm2.grid(column=0, row=13)
@@ -204,7 +214,7 @@ def update_table_sm():
     cursor.execute(mySQLQuery)
     rows_device = cursor.fetchall()
     for i in rows_device:
-        device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic']))
+        device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic'], i['one_pulse_first_entrance'], i['ed_izm_one'], i['one_pulse_second_entranse'], i['ed_izm_two']))
 
 def update_table_day_info():
     day_info_table.delete(*day_info_table.get_children())
@@ -212,7 +222,7 @@ def update_table_day_info():
     cursor.execute(mySQLQuery2)
     rows_day_info = cursor.fetchall()
     for i in rows_day_info:
-        day_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ch2'], i['tch2'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
+        day_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ed_izm_one'], i['ch2'], i['tch2'], i['ed_izm_two'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
 
 def update_table_night_info():
     night_info_table.delete(*night_info_table.get_children())
@@ -220,7 +230,7 @@ def update_table_night_info():
     cursor.execute(mySQLQuery4)
     rows_night_info = cursor.fetchall()
     for i in rows_night_info:
-        night_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ch2'], i['tch2'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
+        night_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ed_izm_one'], i['ch2'], i['tch2'], i['ed_izm_two'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
 
 update_table_sm()
 update_table_day_info()
@@ -233,11 +243,12 @@ def update_device_table(device_table):
     cursor.execute(mySQLQuery)
     rows_device = cursor.fetchall()
     for i in rows_device:
-        device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic']))
+        device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic'], i['one_pulse_first_entrance'], i['ed_izm_one'], i['one_pulse_second_entranse'], i['ed_izm_two']))
         info = str(i['info_smartmaic'])
         ip = str(i['ip_smartmaic'])
         id = str(i['id_smartmaic'])
-
+        ed_izm_one = str(i['ed_izm_one'])
+        ed_izm_two = str(i['ed_izm_two'])
 
         respons = requests.get(http + ip + p + id + Pass)
         respons_json = respons.json()
@@ -247,9 +258,6 @@ def update_device_table(device_table):
         data_and_time = str(final_data).split()
         now_time = data_states.hour
         print(final_data, '\n', "")
-
-
-
 
         CH1 = respons_json["data"]["Ch1"]["value"]
         TCH1 = respons_json["data"]["TCh1"]["value"]
@@ -263,7 +271,7 @@ def update_device_table(device_table):
 
         if now_time == 12 or now_time == 20:
 
-            mySQLQuery1 = "INSERT INTO dbo.day_info(name, ch1, tch1, ch2, tch2, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{CH2}', f'{TCH2}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
+            mySQLQuery1 = "INSERT INTO dbo.day_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{ed_izm_one}', f'{CH2}', f'{TCH2}', f'{ed_izm_two}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery1)
             connection.commit()
 
@@ -273,14 +281,10 @@ def update_device_table(device_table):
             print("Всего на втором импульсном входе: ", respons_json["data"]["TCh2"]["value"])
             print("")
 
-            day_info_table.delete(*day_info_table.get_children())
-            mySQLQuery2 = ("""SELECT * FROM dbo.day_info ORDER BY data DESC, time DESC""")
-            cursor.execute(mySQLQuery2)
-            rows_day_info = cursor.fetchall()
-            for i in rows_day_info:
-                day_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ch2'], i['tch2'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
-        if now_time == 4:
-            mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ch2, tch2, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{CH2}', f'{TCH2}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
+            update_table_day_info()
+
+        if now_time == 15:
+            mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{ed_izm_one}', f'{CH2}', f'{TCH2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery3)
             connection.commit()
 
@@ -290,20 +294,14 @@ def update_device_table(device_table):
             print("Всего на втором импульсном входе: ", respons_json["data"]["TCh2"]["value"])
             print("")
 
-            night_info_table.delete(*night_info_table.get_children())
-            mySQLQuery4 = ("""SELECT * FROM dbo.night_info ORDER BY data DESC, time DESC""")
-            cursor.execute(mySQLQuery4)
-            rows_night_info = cursor.fetchall()
-            for i in rows_night_info:
-                night_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ch2'], i['tch2'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
-
+            update_table_night_info()
 
 
 def my_mainloop():
     data_states = datetime.datetime.now()
     now_time_hour = data_states.hour
     now_time_min = data_states.minute
-    if now_time_hour == 12 and now_time_min == 0 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
+    if now_time_hour == 15 and now_time_min == 44 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
 
