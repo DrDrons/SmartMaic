@@ -8,7 +8,8 @@ from tkinter.ttk import Frame, Notebook, Treeview
 import tkinter as tk
 from tkinter import messagebox
 
-
+#SERVER=DESKTOP-S152C1O\SQLEXPRESS; Cервер Вова
+#SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
                                 'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
