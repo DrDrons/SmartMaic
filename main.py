@@ -56,13 +56,13 @@ day_info_table.pack(side=BOTTOM, padx=20, pady=(10, 10))
 day_info_table["columns"] = rows_day_info
 day_info_table["displaycolumns"] = rows_day_info
 for head in rows_day_info:
-    day_info_table.column(head, anchor=CENTER, width=160)
+    day_info_table.column(head, anchor=CENTER, width=130)
 
 day_info_table.heading(rows_day_info[0], text="Название")
-day_info_table.heading(rows_day_info[1], text="Импульсный вход")
-day_info_table.heading(rows_day_info[2], text="Всего импульсов(TCh1)")
-day_info_table.heading(rows_day_info[3], text="Второй импульсный вход")
-day_info_table.heading(rows_day_info[4], text="Всего импульсов(TCh2)")
+day_info_table.heading(rows_day_info[1], text="Импульсный вход 1")
+day_info_table.heading(rows_day_info[2], text="За всё время(TCh1)")
+day_info_table.heading(rows_day_info[3], text="Импульсный вход 2")
+day_info_table.heading(rows_day_info[4], text="За всё время(TCh2)")
 day_info_table.heading(rows_day_info[5], text="Дата")
 day_info_table.heading(rows_day_info[6], text="Время")
 day_info_table.heading(rows_day_info[7], text="IP-Устройства")
@@ -77,13 +77,13 @@ night_info_table.pack(side=BOTTOM, pady=(10, 10))
 night_info_table["columns"] = rows_night_info
 night_info_table["displaycolumns"] = rows_night_info
 for head in rows_night_info:
-    night_info_table.column(head, anchor=CENTER, width=160)
+    night_info_table.column(head, anchor=CENTER, width=130)
 
 night_info_table.heading(rows_night_info[0], text="Название")
-night_info_table.heading(rows_night_info[1], text="Первый импульсный вход")
-night_info_table.heading(rows_night_info[2], text="Всего импульсов(TCh1)")
-night_info_table.heading(rows_night_info[3], text="Второй импульсный вход")
-night_info_table.heading(rows_night_info[4], text="Всего импульсов(TCh2)")
+night_info_table.heading(rows_night_info[1], text="Импульсный вход 1")
+night_info_table.heading(rows_night_info[2], text="За всё время(TCh1)")
+night_info_table.heading(rows_night_info[3], text="Импульсный вход 2")
+night_info_table.heading(rows_night_info[4], text="За всё время(TCh2)")
 night_info_table.heading(rows_night_info[5], text="Дата")
 night_info_table.heading(rows_night_info[6], text="Время")
 night_info_table.heading(rows_night_info[7], text="IP-Устройства")
