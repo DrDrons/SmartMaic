@@ -11,7 +11,7 @@ from tkinter import messagebox
 
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
