@@ -7,6 +7,7 @@ from tkinter import ttk
 from tkinter.ttk import Frame, Notebook, Treeview
 import tkinter as tk
 from tkinter import messagebox
+import autification
 
 #SERVER=DESKTOP-S152C1O\SQLEXPRESS; Cервер Вова
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
@@ -18,7 +19,6 @@ connection = pypyodbc.connect('Driver={SQL Server};'
 cursor = connection.cursor()
 
 
-
 window = Tk()
 window.title("SmartMaic")
 window.geometry('1000x700')
@@ -27,14 +27,14 @@ tab_control = Notebook(window)
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
     rd = f.read()
-    messagebox.showinfo('Справка', "" + str(rd) + "")
+    messagebox.showinfo('Добавление устройства', "" + str(rd) + "")
 
 menu = Menu(window)
 
 file_item = Menu(menu)
-file_item.add_command(label='Справка', command=spravka)
+file_item.add_command(label='Добавление устройства', command=spravka)
 
-menu.add_cascade(label='Меню', menu=file_item)
+menu.add_cascade(label='Справка', menu=file_item)
 
 window.config(menu=menu)
 
@@ -283,7 +283,8 @@ def update_device_table(device_table):
 
             update_table_day_info()
 
-        if now_time == 15:
+        if now_time == 4\
+                :
             mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{ed_izm_one}', f'{CH2}', f'{TCH2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery3)
             connection.commit()
@@ -301,12 +302,13 @@ def my_mainloop():
     data_states = datetime.datetime.now()
     now_time_hour = data_states.hour
     now_time_min = data_states.minute
-    if now_time_hour == 15 and now_time_min == 44 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
+    if now_time_hour == 12 and now_time_min == 0 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
 
 
 
 window.after(60000, my_mainloop)
-window.mainloop()
+if autification.a == 1:
+    window.mainloop()
 connection.close()
