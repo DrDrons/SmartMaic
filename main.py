@@ -13,7 +13,7 @@ import autification
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
@@ -28,14 +28,20 @@ tab_control = Notebook(window)
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
     rd = f.read()
-    messagebox.showinfo('Справка', "" + str(rd) + "")
+    messagebox.showinfo('Добавление устройства', "" + str(rd) + "")
+
+def teh_support():
+    sup = open('support.txt', 'r', encoding="utf-8")
+    rd_sup = sup.read()
+    messagebox.showinfo('Техническая поддержка', "" + str(rd_sup) + "")
 
 menu = Menu(window)
 
 file_item = Menu(menu)
-file_item.add_command(label='Справка', command=spravka)
+file_item.add_command(label='Добавление устройств', command=spravka)
+file_item.add_command(label='Техническая поддержка', command=teh_support)
 
-menu.add_cascade(label='Меню', menu=file_item)
+menu.add_cascade(label='Справка', menu=file_item)
 
 window.config(menu=menu)
 
