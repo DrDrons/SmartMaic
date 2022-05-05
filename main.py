@@ -120,20 +120,28 @@ p = '/?page=getdata&devid='
 Pass = '&devpass=12345'
 
 def add_smartmaic():
-    if entr_name_sm.get() == '' or entr_ip_sm.get() == '' or entr_id_sm.get() == '' or entr_one_pulse_first1.get() == '' or entr_ed_izm1.get() == '' or entr_one_pulse_first2.get() == '' or entr_ed_izm2.get() == '':
+    if entr_name_sm.get() == '' or entr_ip_sm.get() == '' or entr_id_sm.get() == '':
         messagebox.showwarning('Ошибка!', 'Введите все данные!')
     else:
-        mySQLQuery1 = f"insert into dbo.device(info_smartmaic, ip_smartmaic, id_smartmaic, one_pulse_first_entrance, ed_izm_one, one_pulse_second_entranse, ed_izm_two) values (N'" + entr_name_sm.get() + "',N'" + entr_ip_sm.get() + "',N'" + entr_id_sm.get() + "',N'" + entr_one_pulse_first1.get() + "',N'" + entr_ed_izm1.get() + "',N'" + entr_one_pulse_first2.get() + "',N'" + entr_ed_izm2.get() + "')"
-        cursor.execute(mySQLQuery1)
-        connection.commit()
-        update_table_sm()
-        entr_name_sm.delete(0, 'end')
-        entr_ip_sm.delete(0, 'end')
-        entr_id_sm.delete(0, 'end')
-        entr_one_pulse_first1.delete(0, 'end')
-        entr_ed_izm1.delete(0, 'end')
-        entr_one_pulse_first2.delete(0, 'end')
-        entr_ed_izm2.delete(0, 'end')
+        if (entr_one_pulse_first1.get() != '' and entr_ed_izm1.get() != '' and entr_one_pulse_first2.get() == '' and entr_ed_izm2.get() == '')\
+                or (entr_one_pulse_first1.get() == '' and entr_ed_izm1.get() == '' and entr_one_pulse_first2.get() != '' and entr_ed_izm2.get() != '')\
+                or (entr_one_pulse_first1.get() != '' and entr_ed_izm1.get() != '' and entr_one_pulse_first2.get() != '' and entr_ed_izm2.get() != ''):
+
+            mySQLQuery1 = f"insert into dbo.device(info_smartmaic, ip_smartmaic, id_smartmaic, one_pulse_first_entrance, ed_izm_one, one_pulse_second_entranse, ed_izm_two) values (N'" + entr_name_sm.get() + "',N'" + entr_ip_sm.get() + "',N'" + entr_id_sm.get() + "',N'" + entr_one_pulse_first1.get() + "',N'" + entr_ed_izm1.get() + "',N'" + entr_one_pulse_first2.get() + "',N'" + entr_ed_izm2.get() + "')"
+            cursor.execute(mySQLQuery1)
+            connection.commit()
+            update_table_sm()
+            entr_name_sm.delete(0, 'end')
+            entr_ip_sm.delete(0, 'end')
+            entr_id_sm.delete(0, 'end')
+            entr_one_pulse_first1.delete(0, 'end')
+            entr_ed_izm1.delete(0, 'end')
+            entr_one_pulse_first2.delete(0, 'end')
+            entr_ed_izm2.delete(0, 'end')
+        else:
+            messagebox.showwarning('Ошибка!', 'Данные введены не корректно!')
+
+
 
 
 def del_smartmaic():
@@ -293,7 +301,7 @@ def update_device_table(device_table):
             update_table_day_info()
 
         if now_time == 15:
-            mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{ed_izm_one}', f'{CH2}', f'{TCH2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
+            mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{final_pokazaniya_ch1}', f'{final_pokazaniya_tch1}', f'{ed_izm_one}', f'{final_pokazaniya_ch2}', f'{final_pokazaniya_tch2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery3)
             connection.commit()
 
