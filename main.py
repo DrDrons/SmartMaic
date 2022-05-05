@@ -13,28 +13,29 @@ import autification
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
 
 
+
 window = Tk()
 window.title("SmartMaic")
-window.geometry('1000x700')
+window.geometry('1500x1000')
 tab_control = Notebook(window)
 
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
     rd = f.read()
-    messagebox.showinfo('Добавление устройства', "" + str(rd) + "")
+    messagebox.showinfo('Справка', "" + str(rd) + "")
 
 menu = Menu(window)
 
 file_item = Menu(menu)
-file_item.add_command(label='Добавление устройства', command=spravka)
+file_item.add_command(label='Справка', command=spravka)
 
-menu.add_cascade(label='Справка', menu=file_item)
+menu.add_cascade(label='Меню', menu=file_item)
 
 window.config(menu=menu)
 
@@ -245,12 +246,15 @@ def update_device_table(device_table):
     for i in rows_device:
         device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic'], i['one_pulse_first_entrance'], i['ed_izm_one'], i['one_pulse_second_entranse'], i['ed_izm_two']))
         info = str(i['info_smartmaic'])
-        ip = str(i['ip_smartmaic'])
-        id = str(i['id_smartmaic'])
+        ip_smartmaic = str(i['ip_smartmaic'])
+        id_smartmaic = str(i['id_smartmaic'])
         ed_izm_one = str(i['ed_izm_one'])
         ed_izm_two = str(i['ed_izm_two'])
+        one_pulse_first_entrance = float(i['one_pulse_first_entrance'])
+        one_pulse_second_entranse = float(i['one_pulse_second_entranse'])
 
-        respons = requests.get(http + ip + p + id + Pass)
+
+        respons = requests.get(http + ip_smartmaic + p + id_smartmaic + Pass)
         respons_json = respons.json()
 
         data_states = datetime.datetime.now()
@@ -266,12 +270,17 @@ def update_device_table(device_table):
         tdate = data_and_time[0]
         ttime = data_and_time[1]
         name = info
-        ip_smartmaic = ip
-        id_smartmaic = id
+
+        '''конвертация импульсов'''
+        final_pokazaniya_ch1 = float(CH1) / one_pulse_first_entrance
+        final_pokazaniya_tch1 = float(TCH1) / one_pulse_first_entrance
+        final_pokazaniya_ch2 = float(CH2) / one_pulse_first_entrance
+        final_pokazaniya_tch2 = float(TCH2) / one_pulse_first_entrance
+
 
         if now_time == 12 or now_time == 20:
 
-            mySQLQuery1 = "INSERT INTO dbo.day_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{ed_izm_one}', f'{CH2}', f'{TCH2}', f'{ed_izm_two}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
+            mySQLQuery1 = "INSERT INTO dbo.day_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{final_pokazaniya_ch1}', f'{final_pokazaniya_tch1}', f'{ed_izm_one}', f'{final_pokazaniya_ch2}', f'{final_pokazaniya_tch2}', f'{ed_izm_two}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery1)
             connection.commit()
 
@@ -283,8 +292,7 @@ def update_device_table(device_table):
 
             update_table_day_info()
 
-        if now_time == 4\
-                :
+        if now_time == 15:
             mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{ed_izm_one}', f'{CH2}', f'{TCH2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery3)
             connection.commit()
@@ -302,7 +310,7 @@ def my_mainloop():
     data_states = datetime.datetime.now()
     now_time_hour = data_states.hour
     now_time_min = data_states.minute
-    if now_time_hour == 12 and now_time_min == 0 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
+    if now_time_hour == 10 and now_time_min == 54 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
 
@@ -311,4 +319,5 @@ def my_mainloop():
 window.after(60000, my_mainloop)
 if autification.a == 1:
     window.mainloop()
+#window.mainloop()
 connection.close()

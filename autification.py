@@ -39,7 +39,6 @@ def clicked():
 
 
     # выводим в диалоговое окно введенные пользователем данные
-    messagebox.showinfo('Заголовок', '{username}, {password}'.format(username=username, password=password))
     close_app()
 
 
@@ -49,12 +48,12 @@ def clicked():
 main_label = Label(window, text='Авторизация', font=font_header, justify=CENTER, **header_padding)
 # помещаем виджет в окно по принципу один виджет под другим
 main_label.pack()
-
+password = ''
 # метка для поля ввода имени
-username_label = Label(window, text='Имя пользователя', font=label_font , **base_padding)
+username_label = Label(window, text='Имя пользователя', font=label_font, **base_padding)
 username_label.pack()
 
-# поле ввода имени
+# поле ввода имени ttk.Entry(mainframe, textvariable = password, show = '*')
 username_entry = Entry(window, bg='#fff', fg='#444', font=font_entry)
 username_entry.pack()
 
@@ -63,7 +62,7 @@ password_label = Label(window, text='Пароль', font=label_font , **base_pad
 password_label.pack()
 
 # поле ввода пароля
-password_entry = Entry(window, bg='#fff', fg='#444', font=font_entry)
+password_entry = Entry(window, bg='#fff', fg='#444', show='*', font=font_entry)
 password_entry.pack()
 
 # кнопка отправки формы
