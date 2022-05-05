@@ -1,17 +1,18 @@
 
 from tkinter import *
 from tkinter import messagebox
+import pypyodbc
+
+connection = pypyodbc.connect('Driver={SQL Server};'
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'Database=bd_smart_maic;')
+cursor = connection.cursor()
 
 
 # главное окно приложения
-
-
 window = Tk()
-# заголовок окна
 window.title('Авторизация')
-# размер окна
 window.geometry('450x230')
-# можно ли изменять размер окна - нет
 window.resizable(False, False)
 
 # кортежи и словари, содержащие настройки шрифтов и отступов
@@ -24,23 +25,17 @@ header_padding = {'padx': 10, 'pady': 12}
 a = 0
 def close_app():
     global a
-    if username_entry.get() == 'admin' and password_entry.get() == '2002':
+    Query_l = f"SELECT adm_log FROM dbo.adm_lp"
+    cursor.execute(Query_l)
+    login = cursor.fetchone()
+    Query_p = f"SELECT adm_pas FROM dbo.adm_lp"
+    cursor.execute(Query_p)
+    password = cursor.fetchone()
+    if username_entry.get() == login[0] and password_entry.get() == password[0]:
         a += 1
         window.destroy()
     else:
         messagebox.showwarning('Ошибка!', 'Невенрый логин или пароль!')
-
-# обработчик нажатия на клавишу 'Войти'
-def clicked():
-
-    # получаем имя пользователя и пароль
-    username = username_entry.get()
-    password = password_entry.get()
-
-
-    # выводим в диалоговое окно введенные пользователем данные
-    close_app()
-
 
 
 # заголовок формы: настроены шрифт (font), отцентрирован (justify), добавлены отступы для заголовка
@@ -66,9 +61,8 @@ password_entry = Entry(window, bg='#fff', fg='#444', show='*', font=font_entry)
 password_entry.pack()
 
 # кнопка отправки формы
-send_btn = Button(window, text='Войти', command=clicked)
+send_btn = Button(window, text='Войти', command=close_app)
 send_btn.pack(**base_padding)
-
 
 # запускаем главный цикл окна
 window.mainloop()

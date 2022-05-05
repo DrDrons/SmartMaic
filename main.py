@@ -13,7 +13,7 @@ import autification
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
@@ -60,7 +60,7 @@ laibal_night.grid(column=0, row=1)
 
 rows_device = ('info_smartmaic', 'ip_smartmaic', 'id_smartmaic', 'one_pulse_first_entrance', 'ed_izm_one', 'one_pulse_second_entranse', 'ed_izm_two')
 device_table = Treeview(device_tab, show="headings")
-device_table.grid(column=0, row=0, columnspan=3, padx=20)
+device_table.grid(column=0, row=0, columnspan=3, padx=20, pady=20, sticky=tk.N)
 device_table["columns"] = rows_device
 device_table["displaycolumns"] = rows_device
 for head in rows_device:
