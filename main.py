@@ -13,7 +13,7 @@ import autification
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
@@ -28,14 +28,20 @@ tab_control = Notebook(window)
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
     rd = f.read()
-    messagebox.showinfo('Справка', "" + str(rd) + "")
+    messagebox.showinfo('Добавление устройства', "" + str(rd) + "")
+
+def teh_support():
+    sup = open('support.txt', 'r', encoding="utf-8")
+    rd_sup = sup.read()
+    messagebox.showinfo('Техническая поддержка', "" + str(rd_sup) + "")
 
 menu = Menu(window)
 
 file_item = Menu(menu)
-file_item.add_command(label='Справка', command=spravka)
+file_item.add_command(label='Добавление устройств', command=spravka)
+file_item.add_command(label='Техническая поддержка', command=teh_support)
 
-menu.add_cascade(label='Меню', menu=file_item)
+menu.add_cascade(label='Справка', menu=file_item)
 
 window.config(menu=menu)
 
@@ -293,7 +299,7 @@ def update_device_table(device_table):
             update_table_day_info()
 
         if now_time == 15:
-            mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{CH1}', f'{TCH1}', f'{ed_izm_one}', f'{CH2}', f'{TCH2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
+            mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{final_pokazaniya_ch1}', f'{final_pokazaniya_tch1}', f'{ed_izm_one}', f'{final_pokazaniya_ch2}', f'{final_pokazaniya_tch2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery3)
             connection.commit()
 
