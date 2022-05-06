@@ -233,7 +233,7 @@ def update_table_sm():
 
 def update_table_day_info():
     day_info_table.delete(*day_info_table.get_children())
-    mySQLQuery2 = ("""SELECT * FROM dbo.day_info ORDER BY data DESC, time DESC""")
+    mySQLQuery2 = ("""SELECT name,ch1,tch1,ed_izm_one,ch2,tch2,ed_izm_two,data,time,ip_smartmaic,id_smartmaic FROM dbo.day_info ORDER BY data DESC, time DESC""")
     cursor.execute(mySQLQuery2)
     rows_day_info = cursor.fetchall()
     for i in rows_day_info:
@@ -292,7 +292,7 @@ def update_device_table(device_table):
         final_pokazaniya_tch2 = float(TCH2) / one_pulse_first_entrance
 
 
-        if now_time == 12 or now_time == 20:
+        if now_time == 9 or now_time == 20:
 
             mySQLQuery1 = "INSERT INTO dbo.day_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{final_pokazaniya_ch1}', f'{final_pokazaniya_tch1}', f'{ed_izm_one}', f'{final_pokazaniya_ch2}', f'{final_pokazaniya_tch2}', f'{ed_izm_two}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery1)
@@ -324,7 +324,7 @@ def my_mainloop():
     data_states = datetime.datetime.now()
     now_time_hour = data_states.hour
     now_time_min = data_states.minute
-    if now_time_hour == 10 and now_time_min == 54 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
+    if now_time_hour == 9 and now_time_min == 58 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
 
