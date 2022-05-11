@@ -65,6 +65,7 @@ password_entry.pack()
 send_btn = Button(window, text='Войти', command=close_app)
 send_btn.pack(**base_padding)
 
+
 keyboard.add_hotkey('enter', close_app)
 # запускаем главный цикл окна
 window.mainloop()
