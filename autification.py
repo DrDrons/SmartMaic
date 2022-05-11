@@ -2,6 +2,7 @@
 from tkinter import *
 from tkinter import messagebox
 import pypyodbc
+import keyboard
 
 connection = pypyodbc.connect('Driver={SQL Server};'
                                 'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
@@ -64,5 +65,6 @@ password_entry.pack()
 send_btn = Button(window, text='Войти', command=close_app)
 send_btn.pack(**base_padding)
 
+keyboard.add_hotkey('enter', close_app)
 # запускаем главный цикл окна
 window.mainloop()
