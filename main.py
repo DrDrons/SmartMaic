@@ -7,15 +7,14 @@ from tkinter import ttk
 from tkinter.ttk import Frame, Notebook, Treeview
 import tkinter as tk
 from tkinter import messagebox
-import autification
-
+from autification import a
 
 #SERVER=DESKTOP-S152C1O\SQLEXPRESS; Cервер Вова
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
-                                'Database=bd_smart_maic_two;')
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
 
@@ -361,7 +360,7 @@ def my_mainloop():
 
 
 window.after(60000, my_mainloop)
-if autification.a == 1:
+if a == 1:
     window.mainloop()
 #window.mainloop()
 connection.close()
