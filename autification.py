@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import messagebox
 import pypyodbc
-import keyboard
+import hashlib
 
 connection = pypyodbc.connect('Driver={SQL Server};'
                                 'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
@@ -32,7 +32,13 @@ def close_app():
     Query_p = f"SELECT adm_pas FROM dbo.adm_lp"
     cursor.execute(Query_p)
     password = cursor.fetchone()
-    if username_entry.get() == login[0] and password_entry.get() == password[0]:
+
+    l = username_entry.get()
+    hash_l_obj = hashlib.md5(l.encode())
+    p = password_entry.get()
+    hash_p_obj = hashlib.md5(p.encode())
+
+    if hash_l_obj.hexdigest() == login[0] and hash_p_obj.hexdigest() == password[0]:
         a += 1
         window.destroy()
     else:
