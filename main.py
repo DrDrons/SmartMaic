@@ -14,8 +14,8 @@ import autification
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
-                                'Database=bd_smart_maic;')
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'Database=bd_smart_maic_two;')
 
 cursor = connection.cursor()
 
@@ -231,9 +231,6 @@ def update_table_sm():
     rows_device = cursor.fetchall()
     for i in rows_device:
         device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic'], i['one_pulse_first_entrance'], i['ed_izm_one'], i['one_pulse_second_entranse'], i['ed_izm_two']))
-
-btn_add_sm = Button(device_tab, text='Добавить', width=10, command=del_smartmaic)
-btn_add_sm.grid(column=0, row=10)
 
 def update_table_day_info():
     day_info_table.delete(*day_info_table.get_children())
