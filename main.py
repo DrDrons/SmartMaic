@@ -8,6 +8,8 @@ from tkinter.ttk import Frame, Notebook, Treeview
 import tkinter as tk
 from tkinter import messagebox
 from autification import a
+import keyboard
+
 
 #SERVER=DESKTOP-S152C1O\SQLEXPRESS; Cервер Вова
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
@@ -15,9 +17,7 @@ from autification import a
 connection = pypyodbc.connect('Driver={SQL Server};'
                                 'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
-
 cursor = connection.cursor()
-
 
 
 window = Tk()
@@ -147,7 +147,11 @@ def add_smartmaic():
         else:
             messagebox.showwarning('Ошибка!', 'Данные введены не корректно!')
 
-
+def fast_add_smartmaic():
+    if entr_name_sm.get() == '' and entr_ip_sm.get() == '' and entr_id_sm.get() == '':
+        pass
+    else:
+        add_smartmaic()
 
 
 def del_smartmaic():
@@ -218,9 +222,11 @@ lb_ed_izm1.grid(column=0, row=12, pady=10)
 
 btn_add_sm = Button(lbf_registraciya, text='Добавить', width=10, command=add_smartmaic)
 btn_add_sm.grid(column=0, row=20, padx=40, pady=(20, 20), sticky=tk.W)
+keyboard.add_hotkey('enter', fast_add_smartmaic)
 
 btn_del_sm = Button(lbf_registraciya, text='Удалить', width=10, command=del_smartmaic)
 btn_del_sm.grid(column=0, row=20, padx=40, sticky=tk.E)
+keyboard.add_hotkey('delete', del_smartmaic)
 
 
 def update_table_sm():

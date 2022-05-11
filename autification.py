@@ -64,9 +64,5 @@ password_entry.pack()
 # кнопка отправки формы
 send_btn = Button(window, text='Войти', command=close_app)
 send_btn.pack(**base_padding)
-keyboard.add_hotkey('enter', close_app)
 
 window.mainloop()
-
-
-
