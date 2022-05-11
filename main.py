@@ -232,6 +232,9 @@ def update_table_sm():
     for i in rows_device:
         device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic'], i['one_pulse_first_entrance'], i['ed_izm_one'], i['one_pulse_second_entranse'], i['ed_izm_two']))
 
+btn_add_sm = Button(device_tab, text='Добавить', width=10, command=del_smartmaic)
+btn_add_sm.grid(column=0, row=10)
+
 def update_table_day_info():
     day_info_table.delete(*day_info_table.get_children())
     mySQLQuery2 = ("""SELECT name,ch1,tch1,ed_izm_one,ch2,tch2,ed_izm_two,data,time,ip_smartmaic,id_smartmaic FROM dbo.day_info ORDER BY data DESC, time DESC""")
@@ -331,6 +334,19 @@ def update_device_table(device_table):
             print("Второй импульсный вход: ", respons_json["data"]["Ch2"]["value"])
             print("Всего на втором импульсном входе: ", respons_json["data"]["TCh2"]["value"])
             print("")
+
+            querySelect1 = "SELECT id FROM night_info"
+            cursor.execute(querySelect1)
+            id_info1 = cursor.fetchall()
+            id_kolvo1 = len(id_info1)
+
+            delete_lishnie_data1 = kolvo_device * 2 * 365
+            print(delete_lishnie_data1)
+
+            if id_kolvo1 > delete_lishnie_data1:
+                res_del1 = id_kolvo1 - delete_lishnie_data1
+                queryDelete1 = f"DELETE FROM dbo.day_info WHERE id <='" + str(res_del1) + "'"
+                cursor.execute(queryDelete1)
 
             update_table_night_info()
 
