@@ -9,12 +9,13 @@ import tkinter as tk
 from tkinter import messagebox
 import autification
 
+
 #SERVER=DESKTOP-S152C1O\SQLEXPRESS; Cервер Вова
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
-                                'Database=bd_smart_maic_two;')
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'Database=bd_smart_maic;')
 
 cursor = connection.cursor()
 

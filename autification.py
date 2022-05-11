@@ -2,11 +2,11 @@
 from tkinter import *
 from tkinter import messagebox
 import pypyodbc
-import keyboard
+from keyboard import is_pressed
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
-                                'Database=bd_smart_maic_two;')
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'Database=bd_smart_maic;')
 cursor = connection.cursor()
 
 
@@ -44,27 +44,30 @@ def close_app():
 main_label = Label(window, text='Авторизация', font=font_header, justify=CENTER, **header_padding)
 # помещаем виджет в окно по принципу один виджет под другим
 main_label.pack()
-password = ''
 # метка для поля ввода имени
 username_label = Label(window, text='Имя пользователя', font=label_font, **base_padding)
 username_label.pack()
 
-# поле ввода имени ttk.Entry(mainframe, textvariable = password, show = '*')
+
 username_entry = Entry(window, bg='#fff', fg='#444', font=font_entry)
 username_entry.pack()
 
-# метка для поля ввода пароля
+
 password_label = Label(window, text='Пароль', font=label_font , **base_padding)
 password_label.pack()
 
-# поле ввода пароля
+
 password_entry = Entry(window, bg='#fff', fg='#444', show='*', font=font_entry)
 password_entry.pack()
 
-# кнопка отправки формы
+
 send_btn = Button(window, text='Войти', command=close_app)
 send_btn.pack(**base_padding)
 
-keyboard.add_hotkey('enter', close_app)
-# запускаем главный цикл окна
+def df():
+    if (is_pressed('enter') == True):
+        close_app()
+    window.after(10, df)
+
+window.after(10, df)
 window.mainloop()
