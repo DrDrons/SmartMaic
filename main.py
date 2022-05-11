@@ -13,8 +13,8 @@ import autification
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
-                                'Database=bd_smart_maic;')
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'Database=bd_smart_maic_two;')
 
 cursor = connection.cursor()
 
@@ -257,6 +257,7 @@ def update_device_table(device_table):
     mySQLQuery = ("""SELECT * FROM dbo.device""")
     cursor.execute(mySQLQuery)
     rows_device = cursor.fetchall()
+    kolvo_device = len(rows_device)
     for i in rows_device:
         device_table.insert('', 'end', values=(i['info_smartmaic'], i['ip_smartmaic'], i['id_smartmaic'], i['one_pulse_first_entrance'], i['ed_izm_one'], i['one_pulse_second_entranse'], i['ed_izm_two']))
         info = str(i['info_smartmaic'])
@@ -292,7 +293,7 @@ def update_device_table(device_table):
         final_pokazaniya_tch2 = float(TCH2) / one_pulse_first_entrance
 
 
-        if now_time == 9 or now_time == 20:
+        if now_time == 11 or now_time == 20:
 
             mySQLQuery1 = "INSERT INTO dbo.day_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{final_pokazaniya_ch1}', f'{final_pokazaniya_tch1}', f'{ed_izm_one}', f'{final_pokazaniya_ch2}', f'{final_pokazaniya_tch2}', f'{ed_izm_two}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery1)
@@ -303,6 +304,19 @@ def update_device_table(device_table):
             print("Второй импульсный вход: ", respons_json["data"]["Ch2"]["value"])
             print("Всего на втором импульсном входе: ", respons_json["data"]["TCh2"]["value"])
             print("")
+
+            querySelect = "SELECT id FROM day_info"
+            cursor.execute(querySelect)
+            id_info = cursor.fetchall()
+            id_kolvo = len(id_info)
+
+            delete_lishnie_data = kolvo_device * 2 * 365
+            print(delete_lishnie_data)
+
+            if id_kolvo > delete_lishnie_data:
+                res_del = id_kolvo - delete_lishnie_data
+                queryDelete = f"DELETE FROM dbo.day_info WHERE id <='"+ str(res_del) +"'"
+                cursor.execute(queryDelete)
 
             update_table_day_info()
 
@@ -320,11 +334,13 @@ def update_device_table(device_table):
             update_table_night_info()
 
 
+
+
 def my_mainloop():
     data_states = datetime.datetime.now()
     now_time_hour = data_states.hour
     now_time_min = data_states.minute
-    if now_time_hour == 9 and now_time_min == 58 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
+    if now_time_hour == 11 and now_time_min == 5 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
 
