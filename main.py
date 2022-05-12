@@ -11,12 +11,14 @@ from autification import a
 import keyboard
 
 
+
+
 #SERVER=DESKTOP-S152C1O\SQLEXPRESS; Cервер Вова
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
-                                'Database=bd_smart_maic;')
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'Database=bd_smart_maic_two;')
 cursor = connection.cursor()
 
 
@@ -24,6 +26,7 @@ window = Tk()
 window.title("SmartMaic")
 window.geometry('1500x1000')
 tab_control = Notebook(window)
+
 
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
@@ -228,6 +231,14 @@ btn_del_sm = Button(lbf_registraciya, text='Удалить', width=10, command=d
 btn_del_sm.grid(column=0, row=20, padx=40, sticky=tk.E)
 keyboard.add_hotkey('delete', del_smartmaic)
 
+lb_upgrade = Label(lbf_registraciya, text='Изменение данных')
+lb_upgrade.grid(column=0, row=21, pady=10)
+
+btn_select_data = Button(lbf_registraciya, text='Выбрать', width=10, command=add_smartmaic)
+btn_select_data.grid(column=0, row=22, pady=(20, 20), sticky=tk.W, padx=40)
+
+btn_upgrade_data = Button(lbf_registraciya, text='Изменить', width=10, command=del_smartmaic)
+btn_upgrade_data.grid(column=0, row=22, sticky=tk.E, padx=40)
 
 def update_table_sm():
     device_table.delete(*device_table.get_children())
@@ -362,6 +373,7 @@ def my_mainloop():
     if now_time_hour == 11 and now_time_min == 5 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
+
 
 
 

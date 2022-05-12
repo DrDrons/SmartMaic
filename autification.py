@@ -5,8 +5,8 @@ import pypyodbc
 import keyboard
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
-                                'Database=bd_smart_maic;')
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'Database=bd_smart_maic_two;')
 cursor = connection.cursor()
 
 
@@ -23,6 +23,7 @@ label_font = ('Arial', 11)
 base_padding = {'padx': 10, 'pady': 8}
 header_padding = {'padx': 10, 'pady': 12}
 
+
 a = 0
 def close_app():
     global a
@@ -37,6 +38,7 @@ def close_app():
         window.destroy()
     else:
         messagebox.showwarning('Ошибка!', 'Невенрый логин или пароль!')
+
 
 
 # заголовок формы: настроены шрифт (font), отцентрирован (justify), добавлены отступы для заголовка
