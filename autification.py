@@ -5,8 +5,8 @@ import pypyodbc
 import hashlib
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
-                                'Database=bd_smart_maic;')
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'Database=bd_smart_maic_two;')
 cursor = connection.cursor()
 
 # главное окно приложения
@@ -42,7 +42,7 @@ def close_app():
         a += 1
         window.destroy()
     else:
-        messagebox.showwarning('Ошибка!', 'Невенрый логин или пароль!')
+        messagebox.showwarning('Ошибка!', 'Неверный логин или пароль!')
 
 
 

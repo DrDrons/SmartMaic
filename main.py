@@ -9,6 +9,7 @@ import tkinter as tk
 from tkinter import messagebox
 from autification import a
 import keyboard
+import hashlib
 
 
 
@@ -17,8 +18,8 @@ import keyboard
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
-                                'Database=bd_smart_maic;')
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'Database=bd_smart_maic_two;')
 cursor = connection.cursor()
 
 
@@ -26,6 +27,11 @@ window = Tk()
 window.title("SmartMaic")
 window.geometry('1500x1000')
 tab_control = Notebook(window)
+
+
+s = ttk.Style()
+s.theme_use('clam')
+s.configure('Treeview.Heading', background="#77a1e0")
 
 
 def spravka():
@@ -61,8 +67,6 @@ laibal_day.grid(column=0, row=0)
 laibal_night = Frame(day_info_tab)
 laibal_night.grid(column=0, row=1)
 
-ttk.Style().configure("TButton", padding=6, relief="flat",
-   background="#ccc")
 
 rows_device = ('info_smartmaic', 'ip_smartmaic', 'id_smartmaic', 'one_pulse_first_entrance', 'ed_izm_one', 'one_pulse_second_entranse', 'ed_izm_two')
 device_table = Treeview(device_tab, show="headings")
@@ -227,6 +231,130 @@ def upgrade_data_frame():
     btn_upgrade_data['state'] = 'disabled'
 
 
+
+def window_auntif_add():
+    def sequre_pass():
+        Query_p = f"SELECT adm_pas FROM dbo.adm_lp"
+        cursor.execute(Query_p)
+        password = cursor.fetchone()
+
+        p = password_entry.get()
+        hash_p_obj = hashlib.md5(p.encode())
+
+        if hash_p_obj.hexdigest() == password[0]:
+            add_smartmaic()
+            new_window.destroy()
+        else:
+            messagebox.showwarning('Ошибка!', 'Неверный пароль!')
+
+    new_window = Toplevel(window)
+    new_window.geometry('450x230')
+    new_window.title("Подтверждение действий")
+    font_header = ('Arial', 15)
+    font_entry = ('Arial', 12)
+    label_font = ('Arial', 11)
+    base_padding = {'padx': 10, 'pady': 8}
+    header_padding = {'padx': 10, 'pady': 12}
+
+    main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
+    # помещаем виджет в окно по принципу один виджет под другим
+    main_label.pack()
+    password = ''
+
+    password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
+    password_label.pack()
+
+    # поле ввода пароля
+    password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
+    password_entry.pack()
+
+    # кнопка отправки формы
+    send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
+    send_btn.pack(**base_padding)
+
+
+def window_auntif_del():
+    def sequre_pass():
+        Query_p = f"SELECT adm_pas FROM dbo.adm_lp"
+        cursor.execute(Query_p)
+        password = cursor.fetchone()
+
+        p = password_entry.get()
+        hash_p_obj = hashlib.md5(p.encode())
+
+        if hash_p_obj.hexdigest() == password[0]:
+            del_smartmaic()
+            new_window.destroy()
+        else:
+            messagebox.showwarning('Ошибка!', 'Неверный пароль!')
+
+    new_window = Toplevel(window)
+    new_window.geometry('450x230')
+    new_window.title("Подтверждение действий")
+    font_header = ('Arial', 15)
+    font_entry = ('Arial', 12)
+    label_font = ('Arial', 11)
+    base_padding = {'padx': 10, 'pady': 8}
+    header_padding = {'padx': 10, 'pady': 12}
+
+    main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
+    # помещаем виджет в окно по принципу один виджет под другим
+    main_label.pack()
+    password = ''
+
+    password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
+    password_label.pack()
+
+    # поле ввода пароля
+    password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
+    password_entry.pack()
+
+    # кнопка отправки формы
+    send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
+    send_btn.pack(**base_padding)
+
+
+def window_auntif_upgrade():
+    def sequre_pass():
+        Query_p = f"SELECT adm_pas FROM dbo.adm_lp"
+        cursor.execute(Query_p)
+        password = cursor.fetchone()
+
+        p = password_entry.get()
+        hash_p_obj = hashlib.md5(p.encode())
+
+        if hash_p_obj.hexdigest() == password[0]:
+            upgrade_data_frame()
+            new_window.destroy()
+        else:
+            messagebox.showwarning('Ошибка!', 'Неверный пароль!')
+
+    new_window = Toplevel(window)
+    new_window.geometry('450x230')
+    new_window.title("Подтверждение действий")
+    font_header = ('Arial', 15)
+    font_entry = ('Arial', 12)
+    label_font = ('Arial', 11)
+    base_padding = {'padx': 10, 'pady': 8}
+    header_padding = {'padx': 10, 'pady': 12}
+
+    main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
+    # помещаем виджет в окно по принципу один виджет под другим
+    main_label.pack()
+    password = ''
+
+    password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
+    password_label.pack()
+
+    # поле ввода пароля
+    password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
+    password_entry.pack()
+
+    # кнопка отправки формы
+    send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
+    send_btn.pack(**base_padding)
+
+
 '''графика'''
 lbf_registraciya = LabelFrame(device_tab, text='Добавление нового устройства', width=340, height=250)
 lbf_registraciya.grid(column=3, row=0, pady=10, padx=40)
@@ -276,11 +404,11 @@ lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
 lb_ed_izm1.grid(column=0, row=12, pady=10)
 
 
-btn_add_sm = ttk.Button(lbf_registraciya, text='Добавить', width=10, command=add_smartmaic)
+btn_add_sm = ttk.Button(lbf_registraciya, text='Добавить', width=10, command=window_auntif_add)
 btn_add_sm.grid(column=0, row=20, padx=40, pady=(20, 20), sticky=tk.W)
 keyboard.add_hotkey('enter', fast_add_smartmaic)
 
-btn_del_sm = ttk.Button(lbf_registraciya, text='Удалить', width=10, command=del_smartmaic)
+btn_del_sm = ttk.Button(lbf_registraciya, text='Удалить', width=10, command=window_auntif_del)
 btn_del_sm.grid(column=0, row=20, padx=40, sticky=tk.E)
 keyboard.add_hotkey('delete', del_smartmaic)
 
@@ -290,7 +418,7 @@ lb_upgrade.grid(column=0, row=21, pady=10)
 btn_select_data = ttk.Button(lbf_registraciya, text='Выбрать', width=10, command=insert_upgrade_data_memory)
 btn_select_data.grid(column=0, row=22, pady=(20, 20), sticky=tk.W, padx=40)
 
-btn_upgrade_data = ttk.Button(lbf_registraciya, text='Изменить', width=10, command=upgrade_data_frame)
+btn_upgrade_data = ttk.Button(lbf_registraciya, text='Изменить', width=10, command=window_auntif_upgrade)
 btn_upgrade_data.grid(column=0, row=22, sticky=tk.E, padx=40)
 btn_upgrade_data['state'] = 'disabled'
 
