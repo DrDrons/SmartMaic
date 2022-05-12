@@ -5,7 +5,7 @@ import pypyodbc
 
 from tkinter import *
 from tkinter import ttk
-from tkinter.ttk import Frame, Notebook, Treeview
+from tkinter.ttk import Frame, Treeview
 import tkinter as tk
 from tkinter import messagebox
 from autification import a
@@ -32,7 +32,6 @@ window.geometry('1500x1000')
 window["bg"] = 'blue'
 tab_control = ttk.Notebook(window)
 
-#"TNotebook.Tab":    {"configure": {"padding": [80, 1], "background": "#3c4757", "foreground": "white"}}})
 
 '''#4a576b  #3c4757  #343e4d
 #b1c4e0  #95b5e5  #95b5e5'''
