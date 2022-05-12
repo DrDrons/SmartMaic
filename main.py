@@ -2,7 +2,6 @@ from idlelib.tooltip import Hovertip
 import requests
 import datetime
 import pypyodbc
-
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Frame, Treeview
@@ -33,6 +32,7 @@ window["bg"] = 'blue'
 tab_control = ttk.Notebook(window)
 
 
+
 '''#4a576b  #3c4757  #343e4d
 #b1c4e0  #95b5e5  #95b5e5'''
 
@@ -40,11 +40,13 @@ test = ttk.Style()
 test.theme_create("my_tables",  parent="alt", settings={
         "TFrame":    {"configure": {"background": "#4a576b", "foreground": "white"}},
         "Treeview.Heading":    {"configure": {"background": "#3c4757", "foreground": "white"}},
+        "Treeview.Focus":    {"side": "left"},
         "Treeview":    {"configure": {"background": "#4a576b", "foreground": "white", "fieldbackground": "#5b6b82"}},
         "tab_control":    {"configure": {"background": "black"}},
         "TLabelframe":    {"configure": {"background": "#3c4757", "foreground": "white"}},
         "Label":    {"configure": {"background": "#3c4757", "foreground": "white"}},
-        "TLabel":    {"configure": {"background": "#3c4757", "foreground": "white"}},
+        "TLabel":    {"configure": {"background": "#4a576b", "foreground": "white"}},
+        "TNotebook": {"configure": {"background": "#4a576b"}},
         "TNotebook.Tab":    {"configure": {"padding": [80, 1], "background": "#3c4757", "foreground": "white"}}})
 test.theme_use("my_tables")
 
@@ -71,20 +73,20 @@ window.config(menu=menu)
 
 day_info_tab = ttk.Frame(tab_control)
 tab_control.add(day_info_tab, text="Информация")
-device_tab = Frame(tab_control)
+device_tab = ttk.Frame(tab_control)
 tab_control.add(device_tab, text="SmartMaic")
 
 tab_control.pack(expand=1, fill='both')
 
-laibal_day = Frame(day_info_tab)
+laibal_day = ttk.Frame(day_info_tab)
 laibal_day.grid(column=0, row=0)
 
-laibal_night = Frame(day_info_tab)
+laibal_night = ttk.Frame(day_info_tab)
 laibal_night.grid(column=0, row=1)
 
 
 rows_device = ('info_smartmaic', 'ip_smartmaic', 'id_smartmaic', 'one_pulse_first_entrance', 'ed_izm_one', 'one_pulse_second_entranse', 'ed_izm_two')
-device_table = Treeview(device_tab, show="headings")
+device_table = ttk.Treeview(device_tab, show="headings")
 device_table.grid(column=0, row=0, columnspan=3, padx=20, pady=20, sticky=tk.N)
 device_table["columns"] = rows_device
 device_table["displaycolumns"] = rows_device
@@ -101,7 +103,7 @@ device_table.heading(rows_device[6], text="Единица измерения")
 
 
 rows_day_info = ('name', 'ch1', 'tch1', 'ed_izm_one', 'ch2', 'tch2', 'ed_izm_two', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
-day_info_table = Treeview(laibal_day, show="headings")
+day_info_table = ttk.Treeview(laibal_day, show="headings")
 day_info_table.pack(side=BOTTOM, padx=20, pady=(10, 10))
 day_info_table["columns"] = rows_day_info
 day_info_table["displaycolumns"] = rows_day_info
@@ -124,7 +126,7 @@ laibol_neigth = ttk.Label(laibal_day, text='День')
 laibol_neigth.pack(side=TOP, pady=10)
 
 rows_night_info = ('name', 'ch1', 'tch1', 'ed_izm_one', 'ch2', 'tch2', 'ed_izm_two', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
-night_info_table = Treeview(laibal_night, show="headings")
+night_info_table = ttk.Treeview(laibal_night, show="headings")
 night_info_table.pack(side=BOTTOM, pady=(10, 10))
 night_info_table["columns"] = rows_night_info
 night_info_table["displaycolumns"] = rows_night_info
