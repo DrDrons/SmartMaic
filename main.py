@@ -2,6 +2,7 @@ from idlelib.tooltip import Hovertip
 import requests
 import datetime
 import pypyodbc
+
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Frame, Notebook, Treeview
@@ -10,8 +11,6 @@ from tkinter import messagebox
 from autification import a
 import keyboard
 import hashlib
-
-
 
 
 #SERVER=DESKTOP-S152C1O\SQLEXPRESS; Cервер Вова
@@ -30,27 +29,26 @@ window = Tk()
 window.protocol("WM_DELETE_WINDOW", on_closing)
 window.title("SmartMaic")
 window.geometry('1500x1000')
-tab_control = Notebook(window)
+window["bg"] = 'blue'
+tab_control = ttk.Notebook(window)
 
+#"TNotebook.Tab":    {"configure": {"padding": [80, 1], "background": "#3c4757", "foreground": "white"}}})
 
-'''s = ttk.Style()
-s.theme_use('clam')
-s.configure('Treeview.Heading', background="#77a1e0")
-#4a576b  #3c4757  #343e4d
-#b1c4e0  #95b5e5  #95b5e5  '''
+'''#4a576b  #3c4757  #343e4d
+#b1c4e0  #95b5e5  #95b5e5'''
 
 test = ttk.Style()
 test.theme_create("my_tables",  parent="alt", settings={
         "TFrame":    {"configure": {"background": "#4a576b", "foreground": "white"}},
         "Treeview.Heading":    {"configure": {"background": "#3c4757", "foreground": "white"}},
+        "Treeview":    {"configure": {"background": "#4a576b", "foreground": "white", "fieldbackground": "#5b6b82"}},
         "tab_control":    {"configure": {"background": "black"}},
-        "TButton": {"configure": {"background": "#546278"}},
         "TLabelframe":    {"configure": {"background": "#3c4757", "foreground": "white"}},
         "Label":    {"configure": {"background": "#3c4757", "foreground": "white"}},
         "TLabel":    {"configure": {"background": "#3c4757", "foreground": "white"}},
-        "TEntry":    {"configure": {"background": "#4a576b", "foreground": "white"}},
         "TNotebook.Tab":    {"configure": {"padding": [80, 1], "background": "#3c4757", "foreground": "white"}}})
 test.theme_use("my_tables")
+
 
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
@@ -374,69 +372,73 @@ def window_auntif_upgrade():
 
 
 '''графика'''
-lbf_registraciya = ttk.LabelFrame(device_tab, text='Добавление нового устройства', width=340, height=250)
-lbf_registraciya.grid(column=3, row=0, pady=10, padx=40)
+lbf_registraciya = tk.LabelFrame(device_tab, width=340, height=250, background="#3c4757", foreground="white")
+lbf_registraciya.grid(column=3, row=0, pady=20, padx=40)
 
-entr_name_sm = ttk.Entry(lbf_registraciya, width=30)
+
+entr_name_sm = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_name_sm.grid(column=0, row=1, padx=(30, 30))
 
-entr_ip_sm = ttk.Entry(lbf_registraciya, width=30)
+entr_ip_sm = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_ip_sm.grid(column=0, row=3)
 
-entr_id_sm = ttk.Entry(lbf_registraciya, width=30)
+entr_id_sm = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_id_sm.grid(column=0, row=5)
 
-entr_one_pulse_first1 = ttk.Entry(lbf_registraciya, width=30)
+entr_one_pulse_first1 = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_one_pulse_first1.grid(column=0, row=7)
 Hovertip(entr_one_pulse_first1, "Для первого импульсного входа", hover_delay=100)
 
-entr_ed_izm1 = ttk.Entry(lbf_registraciya, width=30)
+entr_ed_izm1 = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_ed_izm1.grid(column=0, row=9)
 
-entr_one_pulse_first2 = ttk.Entry(lbf_registraciya, width=30)
+entr_one_pulse_first2 = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_one_pulse_first2.grid(column=0, row=11)
 Hovertip(entr_one_pulse_first2, "Для второго импульсного входа", hover_delay=100)
 
-entr_ed_izm2 = ttk.Entry(lbf_registraciya, width=30)
+entr_ed_izm2 = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_ed_izm2.grid(column=0, row=13)
 
-lb_name_sm = ttk.Label(lbf_registraciya, text='Название устройства')
+
+#"background": "#3c4757", "foreground": "white"
+
+lb_name_sm = tk.Label(lbf_registraciya, text='Название устройства', background="#3c4757", foreground="white")
 lb_name_sm.grid(column=0, row=0, pady=10)
 
-lb_ip = ttk.Label(lbf_registraciya, text='IP-Адрес')
+lb_ip = tk.Label(lbf_registraciya, text='IP-Адрес', background="#3c4757", foreground="white")
 lb_ip.grid(column=0, row=2, pady=10)
 
-lb_id = ttk.Label(lbf_registraciya, text='ID устройства')
+lb_id = tk.Label(lbf_registraciya, text='ID устройства', background="#3c4757", foreground="white")
 lb_id.grid(column=0, row=4, pady=10)
 
-lb_one_pulse1 = ttk.Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1 = tk.Label(lbf_registraciya, text='Значение одного импульса', background="#3c4757", foreground="white")
 lb_one_pulse1.grid(column=0, row=6, pady=10)
 
-lb_ed_izm1 = ttk.Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1 = tk.Label(lbf_registraciya, text='Единица измерения', background="#3c4757", foreground="white")
 lb_ed_izm1.grid(column=0, row=8, pady=10)
 
-lb_one_pulse1 = ttk.Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1 = tk.Label(lbf_registraciya, text='Значение одного импульса', background="#3c4757", foreground="white")
 lb_one_pulse1.grid(column=0, row=10, pady=10)
 
-lb_ed_izm1 = ttk.Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1 = tk.Label(lbf_registraciya, text='Единица измерения', background="#3c4757", foreground="white")
 lb_ed_izm1.grid(column=0, row=12, pady=10)
 
 
-btn_add_sm = ttk.Button(lbf_registraciya, text='Добавить', width=10, command=window_auntif_add)
+btn_add_sm = tk.Button(lbf_registraciya, text='Добавить', background='#546278', fg='white', relief='ridge', width=10, command=window_auntif_add)
 btn_add_sm.grid(column=0, row=20, padx=40, pady=(20, 20), sticky=tk.W)
 keyboard.add_hotkey('enter', fast_add_smartmaic)
 
-btn_del_sm = ttk.Button(lbf_registraciya, text='Удалить', width=10, command=window_auntif_del)
+btn_del_sm = tk.Button(lbf_registraciya, text='Удалить', background='#546278', fg='white', relief='ridge', width=10, command=window_auntif_del)
 btn_del_sm.grid(column=0, row=20, padx=40, sticky=tk.E)
 keyboard.add_hotkey('delete', del_smartmaic)
 
-lb_upgrade = ttk.Label(lbf_registraciya, text='Изменение данных')
+lb_upgrade = tk.Label(lbf_registraciya, text='Изменение данных', background="#3c4757", foreground="white")
 lb_upgrade.grid(column=0, row=21, pady=10)
 
-btn_select_data = ttk.Button(lbf_registraciya, text='Выбрать', width=10, command=insert_upgrade_data_memory)
+btn_select_data = tk.Button(lbf_registraciya, text='Выбрать', background='#546278', fg='white', relief='ridge', width=10, command=insert_upgrade_data_memory)
 btn_select_data.grid(column=0, row=22, pady=(20, 20), sticky=tk.W, padx=40)
 
-btn_upgrade_data = ttk.Button(lbf_registraciya, text='Изменить', width=10, command=window_auntif_upgrade)
+btn_upgrade_data = tk.Button(lbf_registraciya, text='Изменить', background='#546278', fg='white', relief='ridge', width=10, command=window_auntif_upgrade)
 btn_upgrade_data.grid(column=0, row=22, sticky=tk.E, padx=40)
 btn_upgrade_data['state'] = 'disabled'
 
