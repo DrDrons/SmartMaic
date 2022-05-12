@@ -173,6 +173,56 @@ def del_smartmaic():
     except IndexError:
         messagebox.showwarning('Ошибка', 'Выберете устройство которое нужно удалить!!!')
 
+def insert_upgrade_data_memory():
+    try:
+        row_vibor_memory = device_table.focus()
+        entr_name_sm.delete(0, 'end')
+        entr_ip_sm.delete(0, 'end')
+        entr_id_sm.delete(0, 'end')
+        entr_one_pulse_first1.delete(0, 'end')
+        entr_ed_izm1.delete(0, 'end')
+        entr_one_pulse_first2.delete(0, 'end')
+        entr_ed_izm2.delete(0, 'end')
+        entr_name_sm.insert(0, str(device_table.item(row_vibor_memory)['values'][0]))
+        entr_ip_sm.insert(0, str(device_table.item(row_vibor_memory)['values'][1]))
+        entr_id_sm.insert(0, str(device_table.item(row_vibor_memory)['values'][2]))
+        entr_one_pulse_first1.insert(0, str(device_table.item(row_vibor_memory)['values'][3]))
+        entr_ed_izm1.insert(0, str(device_table.item(row_vibor_memory)['values'][4]))
+        entr_one_pulse_first2.insert(0, str(device_table.item(row_vibor_memory)['values'][5]))
+        entr_ed_izm2.insert(0, str(device_table.item(row_vibor_memory)['values'][5]))
+        btn_add_sm['state'] = DISABLED
+        btn_del_sm['state'] = DISABLED
+        btn_upgrade_data['state'] = 'normal'
+        query = f"SELECT id FROM dbo.device WHERE info_smartmaic='" + str(device_table.item(row_vibor_memory)['values'][0]) + "'"
+        cursor.execute(query)
+        id = cursor.fetchone()
+        global identivity
+        identivity = id[0]
+    except IndexError:
+        messagebox.showwarning('Ошибка!', 'Выберите строку для добавления!')
+        btn_upgrade_data['state'] = 'disabled'
+
+
+def upgrade_data_frame():
+    try:
+        device_table.delete(*device_table.get_children())
+        SQLQuery0 = f"UPDATE dbo.device SET info_smartmaic='" + entr_name_sm.get() + "', ip_smartmaic='" + entr_ip_sm.get() + "', id_smartmaic='" + entr_id_sm.get() + "', one_pulse_first_entrance='" + entr_one_pulse_first1.get() + "', ed_izm_one='" + entr_ed_izm1.get() + "', one_pulse_second_entranse='" + entr_one_pulse_first2.get() + "', ed_izm_two='" + entr_ed_izm2.get() + "' WHERE id='" + str(identivity) + "'"
+        cursor.execute(SQLQuery0)
+        connection.commit()
+        update_table_sm()
+        entr_name_sm.delete(0, 'end')
+        entr_ip_sm.delete(0, 'end')
+        entr_id_sm.delete(0, 'end')
+        entr_one_pulse_first1.delete(0, 'end')
+        entr_ed_izm1.delete(0, 'end')
+        entr_one_pulse_first2.delete(0, 'end')
+        entr_ed_izm2.delete(0, 'end')
+    except pypyodbc.IntegrityError:
+        messagebox.showwarning('Ошибка!', 'Эти данные не возможно изменить, так как они используются в другой таблице!')
+    btn_add_sm['state'] = NORMAL
+    btn_del_sm['state'] = NORMAL
+    btn_upgrade_data['state'] = 'disabled'
+
 
 '''графика'''
 lbf_registraciya = LabelFrame(device_tab, text='Добавление нового устройства', width=340, height=250)
@@ -234,10 +284,10 @@ keyboard.add_hotkey('delete', del_smartmaic)
 lb_upgrade = Label(lbf_registraciya, text='Изменение данных')
 lb_upgrade.grid(column=0, row=21, pady=10)
 
-btn_select_data = Button(lbf_registraciya, text='Выбрать', width=10, command=add_smartmaic)
+btn_select_data = Button(lbf_registraciya, text='Выбрать', width=10, command=insert_upgrade_data_memory)
 btn_select_data.grid(column=0, row=22, pady=(20, 20), sticky=tk.W, padx=40)
 
-btn_upgrade_data = Button(lbf_registraciya, text='Изменить', width=10, command=del_smartmaic)
+btn_upgrade_data = Button(lbf_registraciya, text='Изменить', width=10, command=upgrade_data_frame)
 btn_upgrade_data.grid(column=0, row=22, sticky=tk.E, padx=40)
 
 def update_table_sm():
