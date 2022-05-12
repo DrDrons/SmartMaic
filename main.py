@@ -18,21 +18,39 @@ import hashlib
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
-                                'Database=bd_smart_maic_two;')
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'Database=bd_smart_maic;')
 cursor = connection.cursor()
 
+def on_closing():
+    if messagebox.askokcancel("Выход из приложения", "Вы действительно хотите выйти из приложения?"):
+        window.destroy()
 
 window = Tk()
+window.protocol("WM_DELETE_WINDOW", on_closing)
 window.title("SmartMaic")
 window.geometry('1500x1000')
 tab_control = Notebook(window)
 
 
-s = ttk.Style()
+'''s = ttk.Style()
 s.theme_use('clam')
 s.configure('Treeview.Heading', background="#77a1e0")
+#4a576b  #3c4757  #343e4d
+#b1c4e0  #95b5e5  #95b5e5  '''
 
+test = ttk.Style()
+test.theme_create("my_tables",  parent="alt", settings={
+        "TFrame":    {"configure": {"background": "#4a576b", "foreground": "white"}},
+        "Treeview.Heading":    {"configure": {"background": "#3c4757", "foreground": "white"}},
+        "tab_control":    {"configure": {"background": "black"}},
+        "TButton": {"configure": {"background": "#546278"}},
+        "TLabelframe":    {"configure": {"background": "#3c4757", "foreground": "white"}},
+        "Label":    {"configure": {"background": "#3c4757", "foreground": "white"}},
+        "TLabel":    {"configure": {"background": "#3c4757", "foreground": "white"}},
+        "TEntry":    {"configure": {"background": "#4a576b", "foreground": "white"}},
+        "TNotebook.Tab":    {"configure": {"padding": [80, 1], "background": "#3c4757", "foreground": "white"}}})
+test.theme_use("my_tables")
 
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
@@ -105,7 +123,7 @@ day_info_table.heading(rows_day_info[8], text="Время")
 day_info_table.heading(rows_day_info[9], text="IP-Устройства")
 day_info_table.heading(rows_day_info[10], text="ID-Устройства")
 
-laibol_neigth = Label(laibal_day, text='День')
+laibol_neigth = ttk.Label(laibal_day, text='День')
 laibol_neigth.pack(side=TOP, pady=10)
 
 rows_night_info = ('name', 'ch1', 'tch1', 'ed_izm_one', 'ch2', 'tch2', 'ed_izm_two', 'data', 'time', 'ip_smartmaic', 'id_smartmaic')
@@ -128,7 +146,7 @@ night_info_table.heading(rows_night_info[8], text="Время")
 night_info_table.heading(rows_night_info[9], text="IP-Устройства")
 night_info_table.heading(rows_night_info[10], text="ID-Устройства")
 
-laibol_daay = Label(laibal_night, text='Ночь')
+laibol_daay = ttk.Label(laibal_night, text='Ночь')
 laibol_daay.pack(side=TOP)
 
 http = 'http://'
@@ -356,51 +374,51 @@ def window_auntif_upgrade():
 
 
 '''графика'''
-lbf_registraciya = LabelFrame(device_tab, text='Добавление нового устройства', width=340, height=250)
+lbf_registraciya = ttk.LabelFrame(device_tab, text='Добавление нового устройства', width=340, height=250)
 lbf_registraciya.grid(column=3, row=0, pady=10, padx=40)
 
-entr_name_sm = Entry(lbf_registraciya, width=30)
+entr_name_sm = ttk.Entry(lbf_registraciya, width=30)
 entr_name_sm.grid(column=0, row=1, padx=(30, 30))
 
-entr_ip_sm = Entry(lbf_registraciya, width=30)
+entr_ip_sm = ttk.Entry(lbf_registraciya, width=30)
 entr_ip_sm.grid(column=0, row=3)
 
-entr_id_sm = Entry(lbf_registraciya, width=30)
+entr_id_sm = ttk.Entry(lbf_registraciya, width=30)
 entr_id_sm.grid(column=0, row=5)
 
-entr_one_pulse_first1 = Entry(lbf_registraciya, width=30)
+entr_one_pulse_first1 = ttk.Entry(lbf_registraciya, width=30)
 entr_one_pulse_first1.grid(column=0, row=7)
 Hovertip(entr_one_pulse_first1, "Для первого импульсного входа", hover_delay=100)
 
-entr_ed_izm1 = Entry(lbf_registraciya, width=30)
+entr_ed_izm1 = ttk.Entry(lbf_registraciya, width=30)
 entr_ed_izm1.grid(column=0, row=9)
 
-entr_one_pulse_first2 = Entry(lbf_registraciya, width=30)
+entr_one_pulse_first2 = ttk.Entry(lbf_registraciya, width=30)
 entr_one_pulse_first2.grid(column=0, row=11)
 Hovertip(entr_one_pulse_first2, "Для второго импульсного входа", hover_delay=100)
 
-entr_ed_izm2 = Entry(lbf_registraciya, width=30)
+entr_ed_izm2 = ttk.Entry(lbf_registraciya, width=30)
 entr_ed_izm2.grid(column=0, row=13)
 
-lb_name_sm = Label(lbf_registraciya, text='Название устройства')
+lb_name_sm = ttk.Label(lbf_registraciya, text='Название устройства')
 lb_name_sm.grid(column=0, row=0, pady=10)
 
-lb_ip = Label(lbf_registraciya, text='IP-Адрес')
+lb_ip = ttk.Label(lbf_registraciya, text='IP-Адрес')
 lb_ip.grid(column=0, row=2, pady=10)
 
-lb_id = Label(lbf_registraciya, text='ID устройства')
+lb_id = ttk.Label(lbf_registraciya, text='ID устройства')
 lb_id.grid(column=0, row=4, pady=10)
 
-lb_one_pulse1 = Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1 = ttk.Label(lbf_registraciya, text='Значение одного импульса')
 lb_one_pulse1.grid(column=0, row=6, pady=10)
 
-lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1 = ttk.Label(lbf_registraciya, text='Единица измерения')
 lb_ed_izm1.grid(column=0, row=8, pady=10)
 
-lb_one_pulse1 = Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1 = ttk.Label(lbf_registraciya, text='Значение одного импульса')
 lb_one_pulse1.grid(column=0, row=10, pady=10)
 
-lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1 = ttk.Label(lbf_registraciya, text='Единица измерения')
 lb_ed_izm1.grid(column=0, row=12, pady=10)
 
 
@@ -412,7 +430,7 @@ btn_del_sm = ttk.Button(lbf_registraciya, text='Удалить', width=10, comma
 btn_del_sm.grid(column=0, row=20, padx=40, sticky=tk.E)
 keyboard.add_hotkey('delete', del_smartmaic)
 
-lb_upgrade = Label(lbf_registraciya, text='Изменение данных')
+lb_upgrade = ttk.Label(lbf_registraciya, text='Изменение данных')
 lb_upgrade.grid(column=0, row=21, pady=10)
 
 btn_select_data = ttk.Button(lbf_registraciya, text='Выбрать', width=10, command=insert_upgrade_data_memory)
