@@ -4,7 +4,6 @@ import datetime
 import pypyodbc
 from tkinter import *
 from tkinter import ttk
-from tkinter.ttk import Frame, Treeview
 import tkinter as tk
 from tkinter import messagebox
 from autification import a
@@ -32,15 +31,10 @@ window["bg"] = 'blue'
 tab_control = ttk.Notebook(window)
 
 
-
-'''#4a576b  #3c4757  #343e4d
-#b1c4e0  #95b5e5  #95b5e5'''
-
 test = ttk.Style()
 test.theme_create("my_tables",  parent="alt", settings={
         "TFrame":    {"configure": {"background": "#4a576b", "foreground": "white"}},
         "Treeview.Heading":    {"configure": {"background": "#3c4757", "foreground": "white"}},
-        "Treeview.Focus":    {"side": "left"},
         "Treeview":    {"configure": {"background": "#4a576b", "foreground": "white", "fieldbackground": "#5b6b82"}},
         "tab_control":    {"configure": {"background": "black"}},
         "TLabelframe":    {"configure": {"background": "#3c4757", "foreground": "white"}},
@@ -50,6 +44,8 @@ test.theme_create("my_tables",  parent="alt", settings={
         "TNotebook.Tab":    {"configure": {"padding": [80, 1], "background": "#3c4757", "foreground": "white"}}})
 test.theme_use("my_tables")
 
+style = ttk.Style()
+style.map("Treeview", background=[('selected', '#5d8561')])
 
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
@@ -274,18 +270,15 @@ def window_auntif_add():
     header_padding = {'padx': 10, 'pady': 12}
 
     main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
-    # помещаем виджет в окно по принципу один виджет под другим
     main_label.pack()
     password = ''
 
     password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
     password_label.pack()
 
-    # поле ввода пароля
     password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
     password_entry.pack()
 
-    # кнопка отправки формы
     send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
     send_btn.pack(**base_padding)
 
@@ -315,18 +308,15 @@ def window_auntif_del():
     header_padding = {'padx': 10, 'pady': 12}
 
     main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
-    # помещаем виджет в окно по принципу один виджет под другим
     main_label.pack()
     password = ''
 
     password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
     password_label.pack()
 
-    # поле ввода пароля
     password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
     password_entry.pack()
 
-    # кнопка отправки формы
     send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
     send_btn.pack(**base_padding)
 
@@ -356,18 +346,15 @@ def window_auntif_upgrade():
     header_padding = {'padx': 10, 'pady': 12}
 
     main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
-    # помещаем виджет в окно по принципу один виджет под другим
     main_label.pack()
     password = ''
 
     password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
     password_label.pack()
 
-    # поле ввода пароля
     password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
     password_entry.pack()
 
-    # кнопка отправки формы
     send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
     send_btn.pack(**base_padding)
 
