@@ -189,7 +189,7 @@ def insert_upgrade_data_memory():
         entr_one_pulse_first1.insert(0, str(device_table.item(row_vibor_memory)['values'][3]))
         entr_ed_izm1.insert(0, str(device_table.item(row_vibor_memory)['values'][4]))
         entr_one_pulse_first2.insert(0, str(device_table.item(row_vibor_memory)['values'][5]))
-        entr_ed_izm2.insert(0, str(device_table.item(row_vibor_memory)['values'][5]))
+        entr_ed_izm2.insert(0, str(device_table.item(row_vibor_memory)['values'][6]))
         btn_add_sm['state'] = DISABLED
         btn_del_sm['state'] = DISABLED
         btn_upgrade_data['state'] = 'normal'
@@ -289,6 +289,7 @@ btn_select_data.grid(column=0, row=22, pady=(20, 20), sticky=tk.W, padx=40)
 
 btn_upgrade_data = Button(lbf_registraciya, text='Изменить', width=10, command=upgrade_data_frame)
 btn_upgrade_data.grid(column=0, row=22, sticky=tk.E, padx=40)
+btn_upgrade_data['state'] = 'disabled'
 
 def update_table_sm():
     device_table.delete(*device_table.get_children())
@@ -420,7 +421,7 @@ def my_mainloop():
     data_states = datetime.datetime.now()
     now_time_hour = data_states.hour
     now_time_min = data_states.minute
-    if now_time_hour == 11 and now_time_min == 5 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
+    if now_time_hour == 11 and now_time_min == 40 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
 
