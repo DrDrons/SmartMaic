@@ -1,4 +1,4 @@
-
+from tkinter import ttk
 from tkinter import *
 from tkinter import messagebox
 import pypyodbc
@@ -8,7 +8,6 @@ connection = pypyodbc.connect('Driver={SQL Server};'
                                 'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
                                 'Database=bd_smart_maic;')
 cursor = connection.cursor()
-
 
 # главное окно приложения
 window = Tk()
@@ -70,7 +69,7 @@ password_entry = Entry(window, bg='#fff', fg='#444', show='*', font=font_entry)
 password_entry.pack()
 
 # кнопка отправки формы
-send_btn = Button(window, text='Войти', command=close_app)
+send_btn = ttk.Button(window, text='Войти', command=close_app)
 send_btn.pack(**base_padding)
 
 window.mainloop()
