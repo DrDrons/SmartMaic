@@ -4,7 +4,7 @@ import datetime
 import pypyodbc
 from tkinter import *
 from tkinter import ttk
-from tkinter.ttk import Frame, Treeview
+from tkinter.ttk import Frame, Notebook, Treeview
 import tkinter as tk
 from tkinter import messagebox
 from autification import a
@@ -21,25 +21,12 @@ connection = pypyodbc.connect('Driver={SQL Server};'
                                 'Database=bd_smart_maic;')
 cursor = connection.cursor()
 
+
 window = Tk()
 window.title("SmartMaic")
 window.geometry('1500x1000')
-tab_control = ttk.Notebook(window)
+tab_control = Notebook(window)
 
-'''s = ttk.Style()
-s.theme_use('clam')
-s.configure('Treeview.Heading', background="#95b5e5")
-b1c4e0  95b5e5   749bd4'''
-
-
-test = ttk.Style()
-test.theme_create("my_tables",  parent="alt", settings={
-        "TFrame":    {"configure": {"background": "#b1c4e0"}},
-        "Treeview.Heading":    {"configure": {"background": "#95b5e5"}},
-        "tab_control":    {"configure": {"background": "black"}},
-        "Label":    {"configure": {"bg": "#95b5e5"}},
-        "TNotebook.Tab":    {"configure": {"padding": [80, 1], "background": "#95b5e5"}}})
-test.theme_use("my_tables")
 
 def spravka():
     f = open('Справка.txt', 'r', encoding="utf-8")
@@ -74,9 +61,11 @@ laibal_day.grid(column=0, row=0)
 laibal_night = Frame(day_info_tab)
 laibal_night.grid(column=0, row=1)
 
+ttk.Style().configure("TButton", padding=6, relief="flat",
+   background="#ccc")
 
 rows_device = ('info_smartmaic', 'ip_smartmaic', 'id_smartmaic', 'one_pulse_first_entrance', 'ed_izm_one', 'one_pulse_second_entranse', 'ed_izm_two')
-device_table = ttk.Treeview(device_tab, show="headings")
+device_table = Treeview(device_tab, show="headings")
 device_table.grid(column=0, row=0, columnspan=3, padx=20, pady=20, sticky=tk.N)
 device_table["columns"] = rows_device
 device_table["displaycolumns"] = rows_device
@@ -265,25 +254,25 @@ Hovertip(entr_one_pulse_first2, "Для второго импульсного в
 entr_ed_izm2 = Entry(lbf_registraciya, width=30)
 entr_ed_izm2.grid(column=0, row=13)
 
-lb_name_sm = ttk.Label(lbf_registraciya, text='Название устройства')
+lb_name_sm = Label(lbf_registraciya, text='Название устройства')
 lb_name_sm.grid(column=0, row=0, pady=10)
 
-lb_ip = ttk.Label(lbf_registraciya, text='IP-Адрес')
+lb_ip = Label(lbf_registraciya, text='IP-Адрес')
 lb_ip.grid(column=0, row=2, pady=10)
 
-lb_id = ttk.Label(lbf_registraciya, text='ID устройства')
+lb_id = Label(lbf_registraciya, text='ID устройства')
 lb_id.grid(column=0, row=4, pady=10)
 
-lb_one_pulse1 = ttk.Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1 = Label(lbf_registraciya, text='Значение одного импульса')
 lb_one_pulse1.grid(column=0, row=6, pady=10)
 
-lb_ed_izm1 = ttk.Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
 lb_ed_izm1.grid(column=0, row=8, pady=10)
 
-lb_one_pulse1 = ttk.Label(lbf_registraciya, text='Значение одного импульса')
+lb_one_pulse1 = Label(lbf_registraciya, text='Значение одного импульса')
 lb_one_pulse1.grid(column=0, row=10, pady=10)
 
-lb_ed_izm1 = ttk.Label(lbf_registraciya, text='Единица измерения')
+lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
 lb_ed_izm1.grid(column=0, row=12, pady=10)
 
 
