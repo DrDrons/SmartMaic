@@ -21,8 +21,12 @@ connection = pypyodbc.connect('Driver={SQL Server};'
                                 'Database=bd_smart_maic_two;')
 cursor = connection.cursor()
 
+def on_closing():
+    if messagebox.askokcancel("Выход из приложения", "Вы действительно хотите выйти из приложения?"):
+        window.destroy()
 
 window = Tk()
+window.protocol("WM_DELETE_WINDOW", on_closing)
 window.title("SmartMaic")
 window.geometry('1500x1000')
 tab_control = Notebook(window)
