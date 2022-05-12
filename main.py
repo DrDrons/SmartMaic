@@ -17,8 +17,8 @@ import keyboard
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
-                                'Database=bd_smart_maic_two;')
+                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
+                                'Database=bd_smart_maic;')
 cursor = connection.cursor()
 
 
@@ -60,6 +60,9 @@ laibal_day.grid(column=0, row=0)
 
 laibal_night = Frame(day_info_tab)
 laibal_night.grid(column=0, row=1)
+
+ttk.Style().configure("TButton", padding=6, relief="flat",
+   background="#ccc")
 
 rows_device = ('info_smartmaic', 'ip_smartmaic', 'id_smartmaic', 'one_pulse_first_entrance', 'ed_izm_one', 'one_pulse_second_entranse', 'ed_izm_two')
 device_table = Treeview(device_tab, show="headings")
@@ -273,21 +276,21 @@ lb_ed_izm1 = Label(lbf_registraciya, text='Единица измерения')
 lb_ed_izm1.grid(column=0, row=12, pady=10)
 
 
-btn_add_sm = Button(lbf_registraciya, text='Добавить', width=10, command=add_smartmaic)
+btn_add_sm = ttk.Button(lbf_registraciya, text='Добавить', width=10, command=add_smartmaic)
 btn_add_sm.grid(column=0, row=20, padx=40, pady=(20, 20), sticky=tk.W)
 keyboard.add_hotkey('enter', fast_add_smartmaic)
 
-btn_del_sm = Button(lbf_registraciya, text='Удалить', width=10, command=del_smartmaic)
+btn_del_sm = ttk.Button(lbf_registraciya, text='Удалить', width=10, command=del_smartmaic)
 btn_del_sm.grid(column=0, row=20, padx=40, sticky=tk.E)
 keyboard.add_hotkey('delete', del_smartmaic)
 
 lb_upgrade = Label(lbf_registraciya, text='Изменение данных')
 lb_upgrade.grid(column=0, row=21, pady=10)
 
-btn_select_data = Button(lbf_registraciya, text='Выбрать', width=10, command=insert_upgrade_data_memory)
+btn_select_data = ttk.Button(lbf_registraciya, text='Выбрать', width=10, command=insert_upgrade_data_memory)
 btn_select_data.grid(column=0, row=22, pady=(20, 20), sticky=tk.W, padx=40)
 
-btn_upgrade_data = Button(lbf_registraciya, text='Изменить', width=10, command=upgrade_data_frame)
+btn_upgrade_data = ttk.Button(lbf_registraciya, text='Изменить', width=10, command=upgrade_data_frame)
 btn_upgrade_data.grid(column=0, row=22, sticky=tk.E, padx=40)
 btn_upgrade_data['state'] = 'disabled'
 
