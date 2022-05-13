@@ -30,13 +30,19 @@ window.geometry('1500x800')
 tab_control = ttk.Notebook(window)
 window.resizable(False, False)
 
+window.update_idletasks()
+width = window.winfo_width()
+height = window.winfo_height()
+x = (window.winfo_screenwidth() // 2) - (width // 2)
+y = (window.winfo_screenheight() // 2) - (height // 2)
+window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
 
 test = ttk.Style()
 test.theme_create("my_tables",  parent="alt", settings={
         "TFrame":    {"configure": {"background": "#4a576b", "foreground": "white"}},
         "Treeview.Heading":    {"configure": {"background": "#3c4757", "foreground": "white"}},
-        "Treeview":    {"configure": {"background": "#4a576b", "foreground": "white", "fieldbackground": "#5b6b82"}},
+        "Treeview":    {"configure": {"background": "#56647a", "foreground": "white", "fieldbackground": "#5b6b82"}},
         "tab_control":    {"configure": {"background": "black"}},
         "TLabelframe":    {"configure": {"background": "#3c4757", "foreground": "white"}},
         "Label":    {"configure": {"background": "#3c4757", "foreground": "white"}},
@@ -263,6 +269,8 @@ def window_auntif_add():
 
     new_window = Toplevel(window)
     new_window.geometry('450x230')
+    new_window.resizable(False, False)
+    new_window['bg'] = "#3c4757"
     new_window.title("Подтверждение действий")
     font_header = ('Arial', 15)
     font_entry = ('Arial', 12)
@@ -270,17 +278,16 @@ def window_auntif_add():
     base_padding = {'padx': 10, 'pady': 8}
     header_padding = {'padx': 10, 'pady': 12}
 
-    main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
+    main_label = tk.Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding, background ="#3c4757", foreground="white")
     main_label.pack()
-    password = ''
 
-    password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
+    password_label = tk.Label(new_window, text='Пароль', font=label_font, **base_padding, background="#3c4757", foreground="white")
     password_label.pack()
 
-    password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
+    password_entry = tk.Entry(new_window, show='*', font=font_entry, background="#4a576b", foreground="white")
     password_entry.pack()
 
-    send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
+    send_btn = tk.Button(new_window, text='Подтвердить', command=sequre_pass, background='#546278', fg='white', relief='ridge')
     send_btn.pack(**base_padding)
 
 
@@ -301,6 +308,8 @@ def window_auntif_del():
 
     new_window = Toplevel(window)
     new_window.geometry('450x230')
+    new_window['bg'] = "#3c4757"
+    new_window.resizable(False, False)
     new_window.title("Подтверждение действий")
     font_header = ('Arial', 15)
     font_entry = ('Arial', 12)
@@ -308,17 +317,16 @@ def window_auntif_del():
     base_padding = {'padx': 10, 'pady': 8}
     header_padding = {'padx': 10, 'pady': 12}
 
-    main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
+    main_label = tk.Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding, background ="#3c4757", foreground="white")
     main_label.pack()
-    password = ''
 
-    password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
+    password_label = tk.Label(new_window, text='Пароль', font=label_font, **base_padding, background ="#3c4757", foreground="white")
     password_label.pack()
 
-    password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
+    password_entry = tk.Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry, background="#4a576b", foreground="white")
     password_entry.pack()
 
-    send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
+    send_btn = tk.Button(new_window, text='Подтвердить', command=sequre_pass, background='#546278', fg='white', relief='ridge')
     send_btn.pack(**base_padding)
 
 
@@ -339,6 +347,8 @@ def window_auntif_upgrade():
 
     new_window = Toplevel(window)
     new_window.geometry('450x230')
+    new_window['bg'] = "#3c4757"
+    new_window.resizable(False, False)
     new_window.title("Подтверждение действий")
     font_header = ('Arial', 15)
     font_entry = ('Arial', 12)
@@ -346,24 +356,22 @@ def window_auntif_upgrade():
     base_padding = {'padx': 10, 'pady': 8}
     header_padding = {'padx': 10, 'pady': 12}
 
-    main_label = Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding)
+    main_label = tk.Label(new_window, text='Подтверждение', font=font_header, justify=CENTER, **header_padding, background ="#3c4757", foreground="white")
     main_label.pack()
-    password = ''
 
-    password_label = Label(new_window, text='Пароль', font=label_font, **base_padding)
+    password_label = tk.Label(new_window, text='Пароль', font=label_font, **base_padding, background ="#3c4757", foreground="white")
     password_label.pack()
 
-    password_entry = Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry)
+    password_entry = tk.Entry(new_window, bg='#fff', fg='#444', show='*', font=font_entry, background="#4a576b", foreground="white")
     password_entry.pack()
 
-    send_btn = ttk.Button(new_window, text='Войти', command=sequre_pass)
+    send_btn = tk.Button(new_window, text='Подтвердить', command=sequre_pass, background='#546278', fg='white', relief='ridge')
     send_btn.pack(**base_padding)
 
 
 '''графика'''
 lbf_registraciya = tk.LabelFrame(device_tab, width=340, height=250, background="#3c4757", foreground="white")
 lbf_registraciya.grid(column=3, row=0, pady=20, padx=40)
-
 
 entr_name_sm = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_name_sm.grid(column=0, row=1, padx=(30, 30))
@@ -388,8 +396,6 @@ Hovertip(entr_one_pulse_first2, "Для второго импульсного в
 entr_ed_izm2 = tk.Entry(lbf_registraciya, width=30, background="#4a576b", foreground="white")
 entr_ed_izm2.grid(column=0, row=13)
 
-
-#"background": "#3c4757", "foreground": "white"
 
 lb_name_sm = tk.Label(lbf_registraciya, text='Название устройства', background="#3c4757", foreground="white")
 lb_name_sm.grid(column=0, row=0, pady=10)
