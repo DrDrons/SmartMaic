@@ -15,8 +15,8 @@ import hashlib
 #SERVER=DESKTOP-GLIOC6U\SQLEXPRESS; Сервер Лёша
 
 connection = pypyodbc.connect('Driver={SQL Server};'
-                                'SERVER=DESKTOP-GLIOC6U\SQLEXPRESS;' 
-                                'Database=bd_smart_maic;')
+                                'SERVER=DESKTOP-S152C1O\SQLEXPRESS;' 
+                                'Database=bd_smart_maic_two;')
 cursor = connection.cursor()
 
 def on_closing():
@@ -271,6 +271,14 @@ def window_auntif_add():
     new_window.geometry('450x230')
     new_window.resizable(False, False)
     new_window['bg'] = "#3c4757"
+
+    new_window.update_idletasks()
+    width = new_window.winfo_width()
+    height = new_window.winfo_height()
+    x = (new_window.winfo_screenwidth() // 2) - (width // 2)
+    y = (new_window.winfo_screenheight() // 2) - (height // 2)
+    new_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
     new_window.title("Подтверждение действий")
     font_header = ('Arial', 15)
     font_entry = ('Arial', 12)
@@ -289,6 +297,8 @@ def window_auntif_add():
 
     send_btn = tk.Button(new_window, text='Подтвердить', command=sequre_pass, background='#546278', fg='white', relief='ridge')
     send_btn.pack(**base_padding)
+
+
 
 
 def window_auntif_del():
@@ -310,6 +320,14 @@ def window_auntif_del():
     new_window.geometry('450x230')
     new_window['bg'] = "#3c4757"
     new_window.resizable(False, False)
+
+    new_window.update_idletasks()
+    width = new_window.winfo_width()
+    height = new_window.winfo_height()
+    x = (new_window.winfo_screenwidth() // 2) - (width // 2)
+    y = (new_window.winfo_screenheight() // 2) - (height // 2)
+    new_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
     new_window.title("Подтверждение действий")
     font_header = ('Arial', 15)
     font_entry = ('Arial', 12)
@@ -349,6 +367,14 @@ def window_auntif_upgrade():
     new_window.geometry('450x230')
     new_window['bg'] = "#3c4757"
     new_window.resizable(False, False)
+
+    new_window.update_idletasks()
+    width = new_window.winfo_width()
+    height = new_window.winfo_height()
+    x = (new_window.winfo_screenwidth() // 2) - (width // 2)
+    y = (new_window.winfo_screenheight() // 2) - (height // 2)
+    new_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
     new_window.title("Подтверждение действий")
     font_header = ('Arial', 15)
     font_entry = ('Arial', 12)
