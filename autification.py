@@ -15,6 +15,13 @@ window.title('Авторизация')
 window.geometry('450x230')
 window.resizable(False, False)
 
+window.update_idletasks()
+width = window.winfo_width()
+height = window.winfo_height()
+x = (window.winfo_screenwidth() // 2) - (width // 2)
+y = (window.winfo_screenheight() // 2) - (height // 2)
+window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
 # кортежи и словари, содержащие настройки шрифтов и отступов
 font_header = ('Arial', 15)
 font_entry = ('Arial', 12)

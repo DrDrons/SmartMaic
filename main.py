@@ -26,9 +26,10 @@ def on_closing():
 window = Tk()
 window.protocol("WM_DELETE_WINDOW", on_closing)
 window.title("SmartMaic")
-window.geometry('1500x1000')
-window["bg"] = 'blue'
+window.geometry('1500x800')
 tab_control = ttk.Notebook(window)
+window.resizable(False, False)
+
 
 
 test = ttk.Style()
@@ -87,7 +88,7 @@ device_table.grid(column=0, row=0, columnspan=3, padx=20, pady=20, sticky=tk.N)
 device_table["columns"] = rows_device
 device_table["displaycolumns"] = rows_device
 for head in rows_device:
-    device_table.column(head, anchor=CENTER, width=150)
+    device_table.column(head, anchor=CENTER, width=163)
 
 device_table.heading(rows_device[0], text="Название")
 device_table.heading(rows_device[1], text="IP-Устройства")
