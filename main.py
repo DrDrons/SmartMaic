@@ -266,6 +266,7 @@ def window_auntif_add():
             new_window.destroy()
         else:
             messagebox.showwarning('Ошибка!', 'Неверный пароль!')
+            new_window.destroy()
 
     new_window = Toplevel(window)
     new_window.geometry('450x230')
@@ -315,6 +316,7 @@ def window_auntif_del():
             new_window.destroy()
         else:
             messagebox.showwarning('Ошибка!', 'Неверный пароль!')
+            new_window.destroy()
 
     new_window = Toplevel(window)
     new_window.geometry('450x230')
@@ -362,6 +364,7 @@ def window_auntif_upgrade():
             new_window.destroy()
         else:
             messagebox.showwarning('Ошибка!', 'Неверный пароль!')
+            new_window.destroy()
 
     new_window = Toplevel(window)
     new_window.geometry('450x230')
@@ -396,17 +399,20 @@ def window_auntif_upgrade():
 
 def search_data():
     day_info_table.delete(*day_info_table.get_children())
-    night_info_table.delete(*night_info_table.get_children())
-    querySearch = f"SELECT name,ch1,tch1,ed_izm_one,ch2,tch2,ed_izm_two,data,time,ip_smartmaic,id_smartmaic FROM dbo.day_info WHERE name LIKE '%"+entr_search.get()+"%'"
+    querySearch = f"SELECT name,ch1,tch1,ed_izm_one,ch2,tch2,ed_izm_two,data,time,ip_smartmaic,id_smartmaic FROM dbo.day_info WHERE name LIKE '%"+entr_search.get()+"%' OR CAST(ch1 AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(tch1 AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(ed_izm_one AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(ch2 AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(tch2 AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(ed_izm_two AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(data AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(time AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(ip_smartmaic AS varchar(50)) LIKE '%"+entr_search.get()+"%' OR CAST(id_smartmaic AS varchar(50)) LIKE '%"+entr_search.get()+"%'"
     cursor.execute(querySearch)
     rows_day_info = cursor.fetchall()
     for i in rows_day_info:
         day_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ed_izm_one'], i['ch2'], i['tch2'], i['ed_izm_two'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
-    for i in rows_day_info:
+    night_info_table.delete(*night_info_table.get_children())
+    querySearch1 = f"SELECT name,ch1,tch1,ed_izm_one,ch2,tch2,ed_izm_two,data,time,ip_smartmaic,id_smartmaic FROM dbo.night_info WHERE name LIKE '%" + entr_search.get() + "%' OR CAST(ch1 AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(tch1 AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(ed_izm_one AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(ch2 AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(tch2 AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(ed_izm_two AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(data AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(time AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(ip_smartmaic AS varchar(50)) LIKE '%" + entr_search.get() + "%' OR CAST(id_smartmaic AS varchar(50)) LIKE '%" + entr_search.get() + "%'"
+    cursor.execute(querySearch1)
+    rows_night_info = cursor.fetchall()
+    for i in rows_night_info:
         night_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ed_izm_one'], i['ch2'], i['tch2'], i['ed_izm_two'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
 
 def finel_search_auto():
-    if entr_search.get() != '':
+    if entr_search.get() != '' and entr_search.get() != "'" and entr_search.get() != "%":
         search_data()
     else:
         update_table_day_info()
@@ -561,7 +567,7 @@ def update_device_table(device_table):
         final_pokazaniya_tch2 = float(TCH2) / one_pulse_first_entrance
 
 
-        if now_time == 11 or now_time == 20:
+        if now_time == 12 or now_time == 20:
 
             mySQLQuery1 = "INSERT INTO dbo.day_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{final_pokazaniya_ch1}', f'{final_pokazaniya_tch1}', f'{ed_izm_one}', f'{final_pokazaniya_ch2}', f'{final_pokazaniya_tch2}', f'{ed_izm_two}', f'{tdate}', f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery1)
@@ -588,7 +594,7 @@ def update_device_table(device_table):
 
             update_table_day_info()
 
-        if now_time == 15:
+        if now_time == 14:
             mySQLQuery3 = "INSERT INTO dbo.night_info(name, ch1, tch1, ed_izm_one, ch2, tch2, ed_izm_two, data, time, ip_smartmaic, id_smartmaic) values('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(f'{name}', f'{final_pokazaniya_ch1}', f'{final_pokazaniya_tch1}', f'{ed_izm_one}', f'{final_pokazaniya_ch2}', f'{final_pokazaniya_tch2}', f'{ed_izm_two}', f'{tdate}',f'{ttime}', f'{ip_smartmaic}', f'{id_smartmaic}')
             cursor.execute(mySQLQuery3)
             connection.commit()
@@ -621,7 +627,7 @@ def my_mainloop():
     data_states = datetime.datetime.now()
     now_time_hour = data_states.hour
     now_time_min = data_states.minute
-    if now_time_hour == 11 and now_time_min == 40 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
+    if now_time_hour == 14 and now_time_min == 6 or now_time_hour == 20 and now_time_min == 0 or now_time_hour == 4 and now_time_min == 0:
         update_device_table(device_table)
     window.after(60000, my_mainloop)
 
