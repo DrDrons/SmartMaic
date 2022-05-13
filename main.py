@@ -368,8 +368,26 @@ def window_auntif_upgrade():
     send_btn = tk.Button(new_window, text='Подтвердить', command=sequre_pass, background='#546278', fg='white', relief='ridge')
     send_btn.pack(**base_padding)
 
+def search_data():
+    day_info_table.delete(*day_info_table.get_children())
+    night_info_table.delete(*night_info_table.get_children())
+    querySearch = f"SELECT name,ch1,tch1,ed_izm_one,ch2,tch2,ed_izm_two,data,time,ip_smartmaic,id_smartmaic FROM dbo.day_info WHERE name LIKE '%"+entr_search.get()+"%'"
+    cursor.execute(querySearch)
+    rows_day_info = cursor.fetchall()
+    for i in rows_day_info:
+        day_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ed_izm_one'], i['ch2'], i['tch2'], i['ed_izm_two'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
+    for i in rows_day_info:
+        night_info_table.insert('', 'end', values=(i['name'], i['ch1'], i['tch1'], i['ed_izm_one'], i['ch2'], i['tch2'], i['ed_izm_two'], i['data'], i['time'], i['ip_smartmaic'], i['id_smartmaic']))
 
+def finel_search_auto():
+    if entr_search.get() != '':
+        search_data()
+    else:
+        update_table_day_info()
+        update_table_night_info()
+    window.after(200, finel_search_auto)
 '''графика'''
+
 lbf_registraciya = tk.LabelFrame(device_tab, width=340, height=250, background="#3c4757", foreground="white")
 lbf_registraciya.grid(column=3, row=0, pady=20, padx=40)
 
@@ -436,6 +454,16 @@ btn_select_data.grid(column=0, row=22, pady=(20, 20), sticky=tk.W, padx=40)
 btn_upgrade_data = tk.Button(lbf_registraciya, text='Изменить', background='#546278', fg='white', relief='ridge', width=10, command=window_auntif_upgrade)
 btn_upgrade_data.grid(column=0, row=22, sticky=tk.E, padx=40)
 btn_upgrade_data['state'] = 'disabled'
+
+laibal_search = tk.LabelFrame(day_info_tab, background="#3c4757")
+laibal_search.grid(column=0, row=100, pady=30, sticky=tk.W, padx=20)
+
+entr_search = tk.Entry(laibal_search, width=60, background="#4a576b", foreground="white")
+entr_search.pack(side=BOTTOM, pady=(10,10), padx=(10,10))
+
+lb_name_search = tk.Label(laibal_search, text='Поиск', background="#3c4757", foreground="white")
+lb_name_search.pack(side=TOP, padx=(10,10))
+
 
 def update_table_sm():
     device_table.delete(*device_table.get_children())
@@ -572,7 +600,7 @@ def my_mainloop():
     window.after(60000, my_mainloop)
 
 
-
+window.after(200, finel_search_auto)
 
 window.after(60000, my_mainloop)
 if a == 1:
