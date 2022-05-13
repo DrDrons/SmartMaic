@@ -1,4 +1,4 @@
-from tkinter import ttk
+import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 import pypyodbc
@@ -9,10 +9,10 @@ connection = pypyodbc.connect('Driver={SQL Server};'
                                 'Database=bd_smart_maic;')
 cursor = connection.cursor()
 
-# главное окно приложения
 window = Tk()
 window.title('Авторизация')
 window.geometry('450x230')
+window['bg'] = "#3c4757"
 window.resizable(False, False)
 
 window.update_idletasks()
@@ -22,7 +22,6 @@ x = (window.winfo_screenwidth() // 2) - (width // 2)
 y = (window.winfo_screenheight() // 2) - (height // 2)
 window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
-# кортежи и словари, содержащие настройки шрифтов и отступов
 font_header = ('Arial', 15)
 font_entry = ('Arial', 12)
 label_font = ('Arial', 11)
@@ -52,31 +51,24 @@ def close_app():
         messagebox.showwarning('Ошибка!', 'Неверный логин или пароль!')
 
 
+main_label = tk.Label(window, text='Авторизация', font=font_header, justify=CENTER, **header_padding, background="#3c4757", foreground="white")
 
-# заголовок формы: настроены шрифт (font), отцентрирован (justify), добавлены отступы для заголовка
-# для всех остальных виджетов настройки делаются также
-main_label = Label(window, text='Авторизация', font=font_header, justify=CENTER, **header_padding)
-# помещаем виджет в окно по принципу один виджет под другим
 main_label.pack()
 password = ''
-# метка для поля ввода имени
-username_label = Label(window, text='Имя пользователя', font=label_font, **base_padding)
+
+username_label = tk.Label(window, text='Имя пользователя', font=label_font, **base_padding, background="#3c4757", foreground="white")
 username_label.pack()
 
-# поле ввода имени ttk.Entry(mainframe, textvariable = password, show = '*')
-username_entry = Entry(window, bg='#fff', fg='#444', font=font_entry)
+username_entry = tk.Entry(window, bg='#fff', fg='#444', font=font_entry, background="#4a576b", foreground="white")
 username_entry.pack()
 
-# метка для поля ввода пароля
-password_label = Label(window, text='Пароль', font=label_font , **base_padding)
+password_label = tk.Label(window, text='Пароль', font=label_font , **base_padding, background="#3c4757", foreground="white")
 password_label.pack()
 
-# поле ввода пароля
-password_entry = Entry(window, bg='#fff', fg='#444', show='*', font=font_entry)
+password_entry = tk.Entry(window, bg='#fff', fg='#444', show='*', font=font_entry, background="#4a576b", foreground="white")
 password_entry.pack()
 
-# кнопка отправки формы
-send_btn = ttk.Button(window, text='Войти', command=close_app)
+send_btn = tk.Button(window, text='Войти', command=close_app, background='#546278', fg='white', relief='ridge')
 send_btn.pack(**base_padding)
 
 window.mainloop()
